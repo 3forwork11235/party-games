@@ -12,3 +12,6 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+/** Side-effect импорт стилей (Vite кладёт их в сборку). */
+declare module '*.css';

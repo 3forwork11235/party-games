@@ -33,6 +33,9 @@ export function mountGame(
   let myClicks = 0;
   let lastRound = -1;
   let raf = 0;
+  // state — один и тот же мутируемый объект Colyseus, поэтому прошлую фазу храним строкой.
+  let lastPhase = '';
+  let goTimer = 0;
 
   const redraw = (): void => {
     if (last) drawBars(canvas, last, me, myClicks);
@@ -57,7 +60,8 @@ export function mountGame(
 
   return {
     update(state) {
-      const prev = last;
+      const prevPhase = lastPhase;
+      lastPhase = state.phase;
       last = state;
       if (state.round !== lastRound || state.phase === 'countdown') {
         lastRound = state.round;
@@ -67,20 +71,26 @@ export function mountGame(
       }
       button.disabled = state.phase !== 'round' || myClicks >= state.target;
       button.style.opacity = button.disabled ? '0.5' : '1';
-      if (state.phase === 'countdown' && prev?.phase !== 'countdown') {
+      if (state.phase === 'countdown' && prevPhase !== 'countdown') {
         cancelAnimationFrame(raf);
         tickCountdown();
-      } else if (state.phase !== 'countdown' && prev?.phase === 'countdown') {
+      } else if (state.phase === 'round' && prevPhase !== 'round') {
+        cancelAnimationFrame(raf);
         overlay.textContent = t('clicker.go');
+        clearTimeout(goTimer);
+        goTimer = window.setTimeout(() => (overlay.textContent = ''), 700);
       } else if (state.phase !== 'countdown' && state.phase !== 'round') {
         overlay.textContent = '';
       }
       const place = state.finishOrder.indexOf(me) + 1;
-      finished.textContent = place > 0 ? t('clicker.finished', { place }) : t('clicker.rules');
+      // finishOrder прошлого раунда сервер чистит только на старте нового — в отсчёте показываем правила.
+      const showPlace = place > 0 && state.phase !== 'countdown';
+      finished.textContent = showPlace ? t('clicker.finished', { place }) : t('clicker.rules');
       redraw();
     },
     destroy() {
       cancelAnimationFrame(raf);
+      clearTimeout(goTimer);
       button.removeEventListener('pointerdown', onTap);
       canvas.remove();
       overlay.remove();

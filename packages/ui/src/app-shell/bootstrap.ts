@@ -25,6 +25,7 @@ import { createPhaseController } from './phases.js';
 import { loadProfile, saveProfile, type Profile } from './session.js';
 import { createShopFlow } from './shopFlow.js';
 import type { StartPartyAppOptions } from './types.js';
+import '../theme.css';
 
 function errorKey(e: unknown): string {
   return e instanceof PartyError && e.code !== 'kicked'
