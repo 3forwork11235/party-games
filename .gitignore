@@ -4,3 +4,6 @@ dist
 *.zip
 coverage
 server/data
+
+# Локальные настройки Claude Code (разрешения)
+.claude/settings.local.json
