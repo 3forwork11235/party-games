@@ -20,6 +20,7 @@ pnpm build | test | lint     # весь репо; для пакета: pnpm --fi
 pnpm build:web|build:yandex|build:telegram <slug|all>   # → dist/<platform>/<slug>
 pnpm zip:yandex <slug>       # → dist/yandex/<slug>.zip
 pnpm gen-registry            # пересобрать server/src/games.generated.ts
+pnpm build:site              # все игры (web) + index.html в dist/web (GitHub Pages)
 ```
 Тест с телефонов в LAN: [docs/LOCAL_TESTING.md](docs/LOCAL_TESTING.md).
 

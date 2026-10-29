@@ -1,0 +1,22 @@
+# Render Blueprint: единый Colyseus-сервер (бесплатный тариф, для тестов).
+# Render → New → Blueprint → этот репозиторий. Перед релизом — VPS (docker-compose.yml + deploy/Caddyfile).
+services:
+  - type: web
+    name: party-games-server
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: master
+    # NODE_ENV=production на Render: без --prod=false pnpm не поставит tsup/typescript.
+    buildCommand: npm i -g pnpm@10.34.9 && pnpm install --frozen-lockfile --prod=false && pnpm --filter @party/server build
+    startCommand: node server/dist/index.js
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+      - key: DATA_DIR
+        value: /tmp/party-data
+      # Для оплаты Stars задать в панели Render (не в репозитории):
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false

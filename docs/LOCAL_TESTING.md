@@ -43,3 +43,9 @@ pnpm build:yandex demo-clicker
 pnpm zip:yandex demo-clicker
 ```
 Результат: `dist/web/demo-clicker`, `dist/yandex/demo-clicker.zip`. Для реального сервера сборку делать с `VITE_SERVER_URL=wss://<API_DOMAIN>`.
+
+## Сайт на GitHub Pages
+Адрес: https://3forwork11235.github.io/party-games/ (каждая игра в `/<slug>/`). Публикуется workflow `.github/workflows/pages.yml` при push в `master`; локально: `pnpm build:site`.
+- Сервер: Render (бесплатный тариф, `render.yaml`) — `wss://party-games-server.onrender.com`, обновляется сам при push в `master`. Засыпает после 15 мин простоя: первый вход после сна ~1 мин.
+- Альтернатива для тестов — сервер на ноутбуке: `start_server_online.bat` (Tuna). Бесплатный Tuna показывает страницу «Посетить» и на WebSocket из браузера, поэтому для сайта на Pages работает плохо; для теста с ноутбука удобнее `start_online.bat`.
+- Адрес сервера в сборке меняется переменной репозитория `SERVER_URL` (Settings → Secrets and variables → Actions → Variables); по умолчанию `wss://party-games-server.onrender.com`. Перед релизом — VPS + домен (docker-compose.yml), меняется только эта переменная.
