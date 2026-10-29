@@ -9,6 +9,8 @@ export interface AnalyticsEventMap {
   ad_rewarded: { placement: string };
   purchase: { productId: string; platform: string };
   session_length: { seconds: number };
+  pack_selected: { game: string; packId: string; paid: boolean };
+  question_skipped: { game: string; round: number; packId: string };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;

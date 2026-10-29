@@ -4,8 +4,35 @@
     {
       "name": "demo-clicker-client",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "@game/demo-clicker", "dev"],
+      "runtimeArgs": [
+        "--filter",
+        "@game/demo-clicker",
+        "dev"
+      ],
       "port": 5173
+    },
+    {
+      "name": "party-server",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@party/server",
+        "dev"
+      ],
+      "port": 2567
+    },
+    {
+      "name": "who-of-us-client",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@game/who-of-us",
+        "dev",
+        "--port",
+        "5174",
+        "--strictPort"
+      ],
+      "port": 5174
     }
   ]
 }

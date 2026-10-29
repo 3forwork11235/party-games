@@ -1,0 +1,38 @@
+{
+  "game": {
+    "title": "Who Of Us"
+  },
+  "whoOfUs": {
+    "questionOf": "Question {round} of {total}",
+    "step1": "Your vote: who of us?",
+    "step2": "Who will get the most votes?",
+    "waiting": "Waiting for others {done}/{total}",
+    "voted": "Voted {done}/{total}",
+    "skip": "Skip question 📺",
+    "packs": "Question packs",
+    "pack": {
+      "friends": "Friends",
+      "family": "Family",
+      "work": "Work",
+      "absurd": "Absurd",
+      "party": "Party"
+    },
+    "leader_one": "Most votes:",
+    "leader_other": "Most votes (tie):",
+    "noVotes": "Nobody voted",
+    "guessed": "+{points} guessed it: {names}",
+    "nobodyGuessed": "Nobody guessed",
+    "mostOften": "Most often: {names} ({count})"
+  },
+  "shop": {
+    "frame_crown": "Crown frame",
+    "frame_hearts": "Hearts frame",
+    "reveal_drumroll": "Reveal: drumroll",
+    "reveal_spotlight": "Reveal: spotlight",
+    "reveal_fireworks": "Reveal: fireworks",
+    "pack_wou_work": "Work pack",
+    "pack_wou_absurd": "Absurd pack",
+    "pack_wou_party": "Party pack",
+    "pack_wou_all": "All packs"
+  }
+}

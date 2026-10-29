@@ -1,0 +1,38 @@
+{
+  "game": {
+    "title": "Кто из нас?"
+  },
+  "whoOfUs": {
+    "questionOf": "Вопрос {round} из {total}",
+    "step1": "Твой голос: кто из нас?",
+    "step2": "Кто наберёт больше всех голосов?",
+    "waiting": "Ждём остальных {done}/{total}",
+    "voted": "Проголосовали {done}/{total}",
+    "skip": "Пропустить вопрос 📺",
+    "packs": "Паки вопросов",
+    "pack": {
+      "friends": "Друзья",
+      "family": "Семья",
+      "work": "Работа",
+      "absurd": "Абсурд",
+      "party": "Вечеринка"
+    },
+    "leader_one": "Больше всех голосов у:",
+    "leader_other": "Больше всех голосов у:",
+    "noVotes": "Никто не проголосовал",
+    "guessed": "+{points} угадали: {names}",
+    "nobodyGuessed": "Никто не угадал",
+    "mostOften": "Чаще всех: {names} ({count})"
+  },
+  "shop": {
+    "frame_crown": "Рамка «Корона»",
+    "frame_hearts": "Рамка «Сердечки»",
+    "reveal_drumroll": "Раскрытие: барабанная дробь",
+    "reveal_spotlight": "Раскрытие: прожектор",
+    "reveal_fireworks": "Раскрытие: фейерверк",
+    "pack_wou_work": "Пак «Работа»",
+    "pack_wou_absurd": "Пак «Абсурд»",
+    "pack_wou_party": "Пак «Вечеринка»",
+    "pack_wou_all": "Все паки"
+  }
+}

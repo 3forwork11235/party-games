@@ -44,4 +44,13 @@ export const NICK_COLORS: Record<string, string> = {
 };
 
 /** id рамок аватара. 'none' — без рамки. */
-export const FRAMES: string[] = ['none', 'bronze', 'silver', 'gold', 'neon', 'rainbow'];
+export const FRAMES: string[] = [
+  'none',
+  'bronze',
+  'silver',
+  'gold',
+  'neon',
+  'rainbow',
+  'crown',
+  'hearts',
+];

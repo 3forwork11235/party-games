@@ -21,6 +21,8 @@ export interface PartyRoomApi {
   readonly config: GameConfig;
   /** Досрочно завершить текущий раунд (только в фазе 'round'). */
   endRound(): void;
+  /** Заново запустить таймер текущего раунда на roundMs (только в фазе 'round'). */
+  restartRound(): void;
   /**
    * Зарегистрировать игровое сообщение. Проходит через rate-limit,
    * обновляет lastActivity, отбрасывается вне перечисленных фаз.

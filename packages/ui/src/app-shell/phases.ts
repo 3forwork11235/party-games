@@ -1,9 +1,10 @@
 import type { PartyClient } from '@party/core/client';
-import { NICK_COLORS, type ICoreState } from '@party/core/shared';
+import { NICK_COLORS, type Cosmetics, type ICoreState } from '@party/core/shared';
 import type { Tracker } from '@party/analytics';
-import type { AdManager } from '@party/monetization';
+import type { AdManager, Entitlements } from '@party/monetization';
 import type { PlatformAdapter } from '@party/platform';
 import type { ScreenRouter } from '../app.js';
+import { h } from '../dom.js';
 import { createLobbyScreen } from '../screens/lobby.js';
 import { createResultsScreen } from '../screens/results.js';
 import { createWaitingScreen } from '../screens/waiting.js';
@@ -15,7 +16,7 @@ import { createGameScreen } from './gameScreen.js';
 import { createRoundEndScreen } from './roundEndScreen.js';
 import { FRAME_COLORS } from './session.js';
 import type { ShopFlow } from './shopFlow.js';
-import type { StartPartyAppOptions } from './types.js';
+import type { GameContext, GameView, StartPartyAppOptions } from './types.js';
 
 export interface PhaseDeps<S extends ICoreState> {
   opts: StartPartyAppOptions<S>;
@@ -30,6 +31,9 @@ export interface PhaseDeps<S extends ICoreState> {
   /** Необязательно: чат (лобби/результаты) и магазин (лобби). */
   chat?: ChatDock;
   shop?: ShopFlow;
+  /** Необязательно: entitlements и выбранная косметика (по умолчанию пусто). */
+  entitlements?: () => Entitlements;
+  cosmetics?: () => Cosmetics;
 }
 
 export interface PhaseController<S extends ICoreState> {
@@ -54,6 +58,28 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
   let roundStartedAt = 0;
   let adToken = 0;
   let resultsSig = '';
+  let lobbyView: GameView<S> | null = null;
+
+  const noEnt = (): Entitlements => ({ noAds: false, cosmetics: new Set(), packs: new Set() });
+  const gameCtx: GameContext<S> = {
+    client,
+    t,
+    platform,
+    me,
+    ads: {
+      canShowRewarded: () => adManager.canShowRewarded(),
+      showRewarded: (placement) => adManager.showRewarded(placement),
+    },
+    entitlements: () => (d.entitlements ?? noEnt)(),
+    track: (name, params) => tracker.track(name, params),
+    cosmetics: () => d.cosmetics?.() ?? {},
+    openShop: (onClose) => void d.shop?.open(onClose),
+  };
+
+  function destroyLobbyView(): void {
+    lobbyView?.destroy();
+    lobbyView = null;
+  }
 
   const connected = (s: S): number => [...s.players.values()].filter((p) => p.connected).length;
 
@@ -85,12 +111,20 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
       onKick: (playerId) => client.send('core:kick', { playerId }),
     });
     router.show(lobby);
+    if (opts.mountLobby) {
+      const box = h('div', { class: 'p-lobby-game' });
+      lobby.el.append(box);
+      lobbyView = opts.mountLobby(box, gameCtx);
+    }
     addLobbyExtras(lobby.el, { t, chat: d.chat, shop: d.shop, onLeave: d.onExit });
-    update = (st) => lobby.update(st, me);
+    update = (st) => {
+      lobby.update(st, me);
+      lobbyView?.update(st);
+    };
   }
 
   function enterGame(s: S): void {
-    const screen = createGameScreen(t, { client, t, platform, me }, opts.mountGame);
+    const screen = createGameScreen(t, gameCtx, opts.mountGame);
     router.show(screen);
     update = (st) => screen.update(st);
     if (!inGame) platform.gameplayStart();
@@ -109,7 +143,10 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
       round: s.round,
       durationMs: Math.max(0, client.serverNow() - roundStartedAt),
     });
-    const screen = createRoundEndScreen(t);
+    const screen = createRoundEndScreen<S>(
+      t,
+      opts.mountRoundEnd ? { ctx: gameCtx, mount: opts.mountRoundEnd } : undefined,
+    );
     router.show(screen);
     update = (st) => screen.update(st);
   }
@@ -161,6 +198,7 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
     render(s) {
       const next = keyOf(s.phase);
       if (next !== key) {
+        destroyLobbyView();
         adToken++; // отменяет отложенный core:adDone прошлого перерыва
         key = next;
         if (next === 'lobby') enterLobby(s);
@@ -174,6 +212,7 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
       update?.(s);
     },
     reset() {
+      destroyLobbyView();
       leaveGame();
       adToken++;
       key = null;

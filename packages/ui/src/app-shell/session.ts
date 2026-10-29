@@ -43,4 +43,6 @@ export const FRAME_COLORS: Record<string, string> = {
   gold: '#ffd700',
   neon: '#39ff14',
   rainbow: '#b57cff',
+  crown: '#f5b700',
+  hearts: '#ff5c8a',
 };

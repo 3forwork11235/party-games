@@ -1,0 +1,38 @@
+{
+  "game": {
+    "title": "Қайсымыз?"
+  },
+  "whoOfUs": {
+    "questionOf": "{round}-сұрақ, барлығы {total}",
+    "step1": "Сенің даусың: қайсымыз?",
+    "step2": "Кім ең көп дауыс жинайды?",
+    "waiting": "Басқаларын күтеміз {done}/{total}",
+    "voted": "Дауыс берді {done}/{total}",
+    "skip": "Сұрақты өткізу 📺",
+    "packs": "Сұрақ топтамалары",
+    "pack": {
+      "friends": "Достар",
+      "family": "Отбасы",
+      "work": "Жұмыс",
+      "absurd": "Абсурд",
+      "party": "Кеш"
+    },
+    "leader_one": "Ең көп дауыс:",
+    "leader_other": "Ең көп дауыс (тең):",
+    "noVotes": "Ешкім дауыс бермеді",
+    "guessed": "+{points} дәл тапты: {names}",
+    "nobodyGuessed": "Ешкім таппады",
+    "mostOften": "Ең жиі: {names} ({count})"
+  },
+  "shop": {
+    "frame_crown": "«Тәж» жақтауы",
+    "frame_hearts": "«Жүректер» жақтауы",
+    "reveal_drumroll": "Ашылу: барабан дүбірі",
+    "reveal_spotlight": "Ашылу: прожектор",
+    "reveal_fireworks": "Ашылу: салют",
+    "pack_wou_work": "«Жұмыс» топтамасы",
+    "pack_wou_absurd": "«Абсурд» топтамасы",
+    "pack_wou_party": "«Кеш» топтамасы",
+    "pack_wou_all": "Барлық топтамалар"
+  }
+}

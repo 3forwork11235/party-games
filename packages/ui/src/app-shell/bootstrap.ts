@@ -13,6 +13,8 @@ import {
   createShop,
   DEFAULT_CATALOG,
   DEFAULT_MONETIZATION_CONFIG,
+  mergeMonetizationConfig,
+  type ProductDef,
 } from '@party/monetization';
 import { createPlatform } from '@party/platform';
 import { createScreenRouter } from '../app.js';
@@ -60,24 +62,29 @@ export async function startPartyApp<S extends ICoreState = ICoreState>(
   }
   waiting('ui.waiting.connecting');
 
+  const catalog: ProductDef[] = [
+    ...DEFAULT_CATALOG.filter((p) => !opts.catalog?.some((c) => c.id === p.id)),
+    ...(opts.catalog ?? []),
+  ];
+  const monetization = mergeMonetizationConfig(DEFAULT_MONETIZATION_CONFIG, opts.monetization);
   const tracker = createTracker({ sink: adapterSink(platform) });
   tracker.startSession();
   const shop = createShop({
     adapter: platform,
-    config: DEFAULT_MONETIZATION_CONFIG,
-    catalog: DEFAULT_CATALOG,
+    config: monetization,
+    catalog,
     tracker,
     storage: platform,
   });
   await shop.refresh().catch(() => undefined);
   const adManager = createAdManager({
     adapter: platform,
-    config: DEFAULT_MONETIZATION_CONFIG,
+    config: monetization,
     tracker,
     entitlements: () => shop.entitlements(),
   });
 
-  const cosmetics = createCosmeticsStore(platform, DEFAULT_CATALOG, () => shop.entitlements());
+  const cosmetics = createCosmeticsStore(platform, catalog, () => shop.entitlements());
   await cosmetics.load();
   const profile: Profile = await loadProfile(platform);
   const client: PartyClient<S> = createPartyClient<S>({
@@ -93,8 +100,8 @@ export async function startPartyApp<S extends ICoreState = ICoreState>(
     t,
     shop,
     adManager,
-    catalog: DEFAULT_CATALOG,
-    config: DEFAULT_MONETIZATION_CONFIG[platform.id],
+    catalog,
+    config: monetization[platform.id],
     cosmetics,
   });
   const phases = createPhaseController<S>({
@@ -109,6 +116,8 @@ export async function startPartyApp<S extends ICoreState = ICoreState>(
     onExit: () => void client.leave(),
     chat,
     shop: shopFlow,
+    entitlements: () => shop.entitlements(),
+    cosmetics: () => cosmetics.get(),
   });
 
   const launchCode = platform.getLaunchParams().roomCode ?? readRoomCodeFromUrl(location.search);
@@ -132,7 +141,7 @@ export async function startPartyApp<S extends ICoreState = ICoreState>(
     lastState = null;
     const entry = createEntryScreen({
       t,
-      avatars: availableAvatars(shop.entitlements(), DEFAULT_CATALOG),
+      avatars: availableAvatars(shop.entitlements(), catalog),
       nick: profile.nick,
       avatar: profile.avatar || undefined,
       initialCode: launchCode ?? undefined,

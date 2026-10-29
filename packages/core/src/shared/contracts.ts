@@ -24,7 +24,7 @@ export type CorePhase = 'lobby' | 'countdown' | 'round' | 'roundEnd' | 'adBreak'
 export interface GameConfig {
   slug: string;
   minPlayers: number; // ≥ 2
-  maxPlayers: number; // ≤ 8
+  maxPlayers: number; // ≤ 10
   rounds: number;
   countdownMs: number;
   roundMs: number; // максимальная длительность раунда

@@ -71,6 +71,13 @@ export abstract class PartyRoom<S extends CoreState>
     if (this.state.phase === 'round') this.finishRound();
   }
 
+  restartRound(): void {
+    if (this.state.phase !== 'round') return;
+    this.phaseTimer?.clear();
+    this.state.phaseEndsAt = this.now() + this.config.roundMs;
+    this.phaseTimer = this.clock.setTimeout(() => this.onPhaseTimeout('round'), this.config.roundMs);
+  }
+
   // ---- core-сообщения ----
 
   private hostId(client: Client): string | null {
