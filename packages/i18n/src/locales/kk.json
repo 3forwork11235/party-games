@@ -1,0 +1,169 @@
+{
+  "ui": {
+    "common": {
+      "ok": "Жақсы",
+      "cancel": "Бас тарту",
+      "close": "Жабу",
+      "back": "Артқа",
+      "retry": "Қайталау",
+      "copy": "Көшіру",
+      "error": "Бірдеңе дұрыс болмады",
+      "loading": "Жүктелуде…"
+    },
+    "entry": {
+      "title": "Қош келдіңіз",
+      "nick_label": "Лақап атыңыз",
+      "nick_placeholder": "Лақап атты енгізіңіз",
+      "avatar_label": "Аватар",
+      "create": "Бөлме құру",
+      "join": "Код арқылы кіру",
+      "code_label": "Бөлме коды",
+      "code_placeholder": "ABCDE",
+      "join_confirm": "Кіру",
+      "invalid_code": "Код 5 таңбадан тұруы керек",
+      "invited": "Сізді {code} бөлмесіне шақырды",
+      "nick": "Сіздің лақап атыңыз",
+      "code": "Бөлме коды",
+      "avatar": "Аватар таңдаңыз",
+      "or": "немесе"
+    },
+    "lobby": {
+      "title": "Күту залы",
+      "code_label": "Бөлме коды",
+      "invite": "Шақыру",
+      "copied": "Көшірілді",
+      "players_one": "{count} ойыншы",
+      "players_few": "{count} ойыншы",
+      "players_many": "{count} ойыншы",
+      "players_other": "{count} ойыншы",
+      "ready": "Дайынмын",
+      "not_ready": "Дайын емін",
+      "start": "Бастау",
+      "kick": "Шығарып жіберу",
+      "host": "Хост",
+      "offline": "Желіде емес",
+      "min_players_one": "Кемінде {count} ойыншы қажет",
+      "min_players_few": "Кемінде {count} ойыншы қажет",
+      "min_players_many": "Кемінде {count} ойыншы қажет",
+      "min_players_other": "Кемінде {count} ойыншы қажет",
+      "leave": "Шығу",
+      "waiting_for_host": "Хосттың ойынды бастауын күтудеміз",
+      "code": "Бөлме коды",
+      "notReady": "Дайын емес",
+      "readyMark": "✓"
+    },
+    "waiting": {
+      "connecting": "Қосылуда…",
+      "reconnecting": "Қайта қосылуда…",
+      "waiting_host": "Хостты күтудеміз…",
+      "waiting_players": "Ойыншыларды күтудеміз…",
+      "default": "Күте тұрыңыз…"
+    },
+    "results": {
+      "title": "Нәтижелер",
+      "place": "{place}-орын",
+      "winner": "Жеңімпаз",
+      "score_one": "{count} ұпай",
+      "score_few": "{count} ұпай",
+      "score_many": "{count} ұпай",
+      "score_other": "{count} ұпай",
+      "play_again": "Тағы бір рет",
+      "leave": "Шығу",
+      "waiting_host": "Хосттың жаңа ойын бастауын күтудеміз",
+      "again": "Тағы бір рет",
+      "exit": "Шығу",
+      "waitHost": "Хост жаңа ойынды бастағанша күтіңіз"
+    },
+    "shop": {
+      "title": "Дүкен",
+      "buy": "Сатып алу",
+      "bought": "Сатып алынды",
+      "watch_ad": "Жарнама көру",
+      "no_ads": "Жарнамасыз",
+      "empty": "Әзірге ештеңе жоқ",
+      "loading": "Тауарлар жүктелуде…",
+      "owned": "Сатып алынды",
+      "close": "Жабу",
+      "watchAd": "Жарнама көру"
+    },
+    "scoreboard": {
+      "title": "Есеп",
+      "round_score": "+{score}",
+      "total": "Барлығы"
+    },
+    "timer": {
+      "seconds": "{count} с"
+    },
+    "chat": {
+      "title": "Чат",
+      "placeholder": "Хабарлама…",
+      "send": "Жіберу",
+      "empty": "Хабарламалар әлі жоқ",
+      "toggle": "Чатты көрсету немесе жасыру"
+    }
+  },
+  "core": {
+    "error": {
+      "not_found": "Бөлме табылмады",
+      "full": "Бөлме толы",
+      "started": "Ойын басталып кетті",
+      "network": "Сервермен байланыс жоқ",
+      "unknown": "Белгісіз қате"
+    },
+    "kicked": {
+      "host": "Хост сізді бөлмеден шығарды",
+      "idle": "Сіз тым ұзақ әрекетсіз болдыңыз",
+      "flood": "Қатарынан тым көп хабарлама"
+    },
+    "toast": {
+      "host_changed": "Енді {name} — хост",
+      "player_joined": "{name} қосылды",
+      "player_left": "{name} шықты",
+      "player_reconnected": "{name} қайта оралды"
+    },
+    "phase": {
+      "round": "{round}-раунд",
+      "countdown": "Дайындалыңыз!",
+      "round_end": "Раунд аяқталды",
+      "results": "Ойын аяқталды"
+    }
+  },
+  "shop": {
+    "category": {
+      "avatar": "Аватарлар",
+      "frame": "Жиектер",
+      "color": "Лақап ат түстері",
+      "effect": "Эффектілер",
+      "pack": "Жиынтықтар"
+    },
+    "product": {
+      "no_ads": "Жарнаманы өшіру",
+      "pack": "Жиынтық"
+    },
+    "purchase_ok": "Сатып алу сәтті аяқталды",
+    "purchase_failed": "Сатып алу мүмкін болмады",
+    "reward_granted": "Сыйлық алынды",
+    "avatar_alien": "«Келімсек» аватары",
+    "avatar_dino": "«Динозавр» аватары",
+    "avatar_robot": "«Робот» аватары",
+    "avatar_dragon": "«Айдаһар» аватары",
+    "frame_gold": "Алтын жиек",
+    "frame_neon": "Неон жиек",
+    "frame_rainbow": "Кемпірқосақ жиегі",
+    "nick_red": "Қызыл лақап ат",
+    "nick_cyan": "Көгілдір лақап ат",
+    "nick_gold": "Алтын лақап ат",
+    "effect_confetti": "«Конфетти» эффектісі",
+    "effect_sparkles": "«Ұшқын» эффектісі",
+    "no_ads": "Жарнаманы өшіру",
+    "pack_example": "«Мысал» жинағы"
+  },
+  "ad": {
+    "break_title": "Жарнама үзілісі",
+    "loading": "Жарнама жүктелуде…",
+    "reward_granted": "Рақмет! Сыйлық сіздікі",
+    "reward_unavailable": "Жарнама қазір қолжетімсіз",
+    "skip": "Өткізіп жіберу",
+    "remove_hint": "Жарнаманы дүкеннен өшіруге болады"
+  }
+}

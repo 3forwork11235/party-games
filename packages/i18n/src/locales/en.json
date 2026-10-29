@@ -1,0 +1,169 @@
+{
+  "ui": {
+    "common": {
+      "ok": "OK",
+      "cancel": "Cancel",
+      "close": "Close",
+      "back": "Back",
+      "retry": "Retry",
+      "copy": "Copy",
+      "error": "Something went wrong",
+      "loading": "Loading…"
+    },
+    "entry": {
+      "title": "Welcome",
+      "nick_label": "Your nickname",
+      "nick_placeholder": "Enter a nickname",
+      "avatar_label": "Avatar",
+      "create": "Create room",
+      "join": "Join by code",
+      "code_label": "Room code",
+      "code_placeholder": "ABCDE",
+      "join_confirm": "Join",
+      "invalid_code": "The code must be 5 characters long",
+      "invited": "You were invited to room {code}",
+      "nick": "Your nickname",
+      "code": "Room code",
+      "avatar": "Choose an avatar",
+      "or": "or"
+    },
+    "lobby": {
+      "title": "Lobby",
+      "code_label": "Room code",
+      "invite": "Invite",
+      "copied": "Copied",
+      "players_one": "{count} player",
+      "players_few": "{count} players",
+      "players_many": "{count} players",
+      "players_other": "{count} players",
+      "ready": "Ready",
+      "not_ready": "Not ready",
+      "start": "Start",
+      "kick": "Kick",
+      "host": "Host",
+      "offline": "Offline",
+      "min_players_one": "At least {count} player is required",
+      "min_players_few": "At least {count} players are required",
+      "min_players_many": "At least {count} players are required",
+      "min_players_other": "At least {count} players are required",
+      "leave": "Leave",
+      "waiting_for_host": "Waiting for the host to start the game",
+      "code": "Room code",
+      "notReady": "Not ready",
+      "readyMark": "✓"
+    },
+    "waiting": {
+      "connecting": "Connecting…",
+      "reconnecting": "Reconnecting…",
+      "waiting_host": "Waiting for the host…",
+      "waiting_players": "Waiting for players…",
+      "default": "Please wait…"
+    },
+    "results": {
+      "title": "Results",
+      "place": "Place {place}",
+      "winner": "Winner",
+      "score_one": "{count} point",
+      "score_few": "{count} points",
+      "score_many": "{count} points",
+      "score_other": "{count} points",
+      "play_again": "Play again",
+      "leave": "Leave",
+      "waiting_host": "Waiting for the host to start a new game",
+      "again": "Play again",
+      "exit": "Exit",
+      "waitHost": "Waiting for the host to start a new game"
+    },
+    "shop": {
+      "title": "Shop",
+      "buy": "Buy",
+      "bought": "Purchased",
+      "watch_ad": "Watch an ad",
+      "no_ads": "No ads",
+      "empty": "Nothing here yet",
+      "loading": "Loading items…",
+      "owned": "Owned",
+      "close": "Close",
+      "watchAd": "Watch an ad"
+    },
+    "scoreboard": {
+      "title": "Score",
+      "round_score": "+{score}",
+      "total": "Total"
+    },
+    "timer": {
+      "seconds": "{count} s"
+    },
+    "chat": {
+      "title": "Chat",
+      "placeholder": "Message…",
+      "send": "Send",
+      "empty": "No messages yet",
+      "toggle": "Show or hide chat"
+    }
+  },
+  "core": {
+    "error": {
+      "not_found": "Room not found",
+      "full": "The room is full",
+      "started": "The game has already started",
+      "network": "No connection to the server",
+      "unknown": "Unknown error"
+    },
+    "kicked": {
+      "host": "The host removed you from the room",
+      "idle": "You were inactive for too long",
+      "flood": "Too many messages in a row"
+    },
+    "toast": {
+      "host_changed": "{name} is now the host",
+      "player_joined": "{name} joined",
+      "player_left": "{name} left",
+      "player_reconnected": "{name} is back"
+    },
+    "phase": {
+      "round": "Round {round}",
+      "countdown": "Get ready!",
+      "round_end": "Round over",
+      "results": "Game over"
+    }
+  },
+  "shop": {
+    "category": {
+      "avatar": "Avatars",
+      "frame": "Frames",
+      "color": "Nick colors",
+      "effect": "Effects",
+      "pack": "Packs"
+    },
+    "product": {
+      "no_ads": "Remove ads",
+      "pack": "Pack"
+    },
+    "purchase_ok": "Purchase complete",
+    "purchase_failed": "Purchase failed",
+    "reward_granted": "Reward received",
+    "avatar_alien": "Alien avatar",
+    "avatar_dino": "Dino avatar",
+    "avatar_robot": "Robot avatar",
+    "avatar_dragon": "Dragon avatar",
+    "frame_gold": "Gold frame",
+    "frame_neon": "Neon frame",
+    "frame_rainbow": "Rainbow frame",
+    "nick_red": "Red nickname",
+    "nick_cyan": "Cyan nickname",
+    "nick_gold": "Gold nickname",
+    "effect_confetti": "Confetti effect",
+    "effect_sparkles": "Sparkles effect",
+    "no_ads": "Remove ads",
+    "pack_example": "Example pack"
+  },
+  "ad": {
+    "break_title": "Ad break",
+    "loading": "Loading ad…",
+    "reward_granted": "Thanks! Reward is yours",
+    "reward_unavailable": "Ads are unavailable right now",
+    "skip": "Skip",
+    "remove_hint": "You can remove ads in the shop"
+  }
+}

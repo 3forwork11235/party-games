@@ -1,0 +1,24 @@
+{
+  "name": "@party/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./shared": "./src/shared/index.ts",
+    "./server": "./src/server/index.ts",
+    "./client": "./src/client/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p . --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@colyseus/schema": "^3.0.76",
+    "colyseus": "~0.16.5",
+    "colyseus.js": "^0.16.22"
+  },
+  "devDependencies": {
+    "@colyseus/testing": "~0.16.3"
+  }
+}

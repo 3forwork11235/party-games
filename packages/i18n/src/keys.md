@@ -1,0 +1,116 @@
+# Ключи i18n
+
+Плюрализация: ключ с суффиксами `_one|_few|_many|_other`, вызывать `t(key, { count })`. Плейсхолдеры: `{name}`. Ниже — ru-значения; полный набор одинаков в ru/kk/en (проверяется тестом).
+
+- `ui.common.ok` — ОК
+- `ui.common.cancel` — Отмена
+- `ui.common.close` — Закрыть
+- `ui.common.back` — Назад
+- `ui.common.retry` — Повторить
+- `ui.common.copy` — Копировать
+- `ui.common.error` — Что-то пошло не так
+- `ui.common.loading` — Загрузка…
+- `ui.entry.title` — Добро пожаловать
+- `ui.entry.nick_label` — Ваш ник
+- `ui.entry.nick_placeholder` — Введите ник
+- `ui.entry.avatar_label` — Аватар
+- `ui.entry.create` — Создать комнату
+- `ui.entry.join` — Войти по коду
+- `ui.entry.code_label` — Код комнаты
+- `ui.entry.code_placeholder` — ABCDE
+- `ui.entry.join_confirm` — Войти
+- `ui.entry.invalid_code` — Код должен состоять из 5 символов
+- `ui.entry.invited` — Вас пригласили в комнату {code}
+- `ui.lobby.title` — Лобби
+- `ui.lobby.code_label` — Код комнаты
+- `ui.lobby.invite` — Пригласить
+- `ui.lobby.copied` — Скопировано
+- `ui.lobby.players_one` — {count} игрок
+- `ui.lobby.players_few` — {count} игрока
+- `ui.lobby.players_many` — {count} игроков
+- `ui.lobby.players_other` — {count} игрока
+- `ui.lobby.ready` — Готов
+- `ui.lobby.not_ready` — Не готов
+- `ui.lobby.start` — Начать
+- `ui.lobby.kick` — Выгнать
+- `ui.lobby.host` — Хост
+- `ui.lobby.offline` — Не в сети
+- `ui.lobby.min_players_one` — Нужен минимум {count} игрок
+- `ui.lobby.min_players_few` — Нужно минимум {count} игрока
+- `ui.lobby.min_players_many` — Нужно минимум {count} игроков
+- `ui.lobby.min_players_other` — Нужно минимум {count} игрока
+- `ui.lobby.leave` — Выйти
+- `ui.lobby.waiting_for_host` — Ждём, пока хост начнёт игру
+- `ui.waiting.connecting` — Подключение…
+- `ui.waiting.reconnecting` — Переподключение…
+- `ui.waiting.waiting_host` — Ждём хоста…
+- `ui.waiting.waiting_players` — Ждём игроков…
+- `ui.results.title` — Итоги
+- `ui.results.place` — {place} место
+- `ui.results.winner` — Победитель
+- `ui.results.score_one` — {count} очко
+- `ui.results.score_few` — {count} очка
+- `ui.results.score_many` — {count} очков
+- `ui.results.score_other` — {count} очка
+- `ui.results.play_again` — Ещё раз
+- `ui.results.leave` — Выйти
+- `ui.results.waiting_host` — Ждём, пока хост запустит новую игру
+- `ui.shop.title` — Магазин
+- `ui.shop.buy` — Купить
+- `ui.shop.bought` — Куплено
+- `ui.shop.watch_ad` — Смотреть рекламу
+- `ui.shop.no_ads` — Без рекламы
+- `ui.shop.empty` — Пока ничего нет
+- `ui.shop.loading` — Загрузка товаров…
+- `ui.scoreboard.title` — Счёт
+- `ui.scoreboard.round_score` — +{score}
+- `ui.scoreboard.total` — Всего
+- `ui.timer.seconds` — {count} с
+- `ui.chat.title` — Чат
+- `ui.chat.placeholder` — Сообщение…
+- `ui.chat.send` — Отправить
+- `ui.chat.empty` — Сообщений пока нет
+- `ui.chat.toggle` — Показать или скрыть чат
+- `core.error.not_found` — Комната не найдена
+- `core.error.full` — Комната заполнена
+- `core.error.started` — Игра уже началась
+- `core.error.network` — Нет соединения с сервером
+- `core.error.unknown` — Неизвестная ошибка
+- `core.kicked.host` — Хост исключил вас из комнаты
+- `core.kicked.idle` — Вы были неактивны слишком долго
+- `core.kicked.flood` — Слишком много сообщений подряд
+- `core.toast.host_changed` — {name} теперь хост
+- `core.toast.player_joined` — {name} присоединился
+- `core.toast.player_left` — {name} вышел
+- `core.toast.player_reconnected` — {name} вернулся
+- `core.phase.round` — Раунд {round}
+- `core.phase.countdown` — Приготовьтесь!
+- `core.phase.round_end` — Раунд окончен
+- `core.phase.results` — Игра окончена
+- `shop.category.avatar` — Аватары
+- `shop.category.frame` — Рамки
+- `shop.category.color` — Цвета ника
+- `shop.category.effect` — Эффекты
+- `shop.category.pack` — Наборы
+- `shop.product.no_ads` — Отключить рекламу
+- `shop.product.pack` — Набор
+- `shop.purchase_ok` — Покупка совершена
+- `shop.purchase_failed` — Не удалось совершить покупку
+- `shop.reward_granted` — Награда получена
+- `ad.break_title` — Рекламная пауза
+- `ad.loading` — Реклама загружается…
+- `ad.reward_granted` — Спасибо! Награда ваша
+- `ad.reward_unavailable` — Реклама сейчас недоступна
+- `ad.skip` — Пропустить
+- `ad.remove_hint` — Отключить рекламу можно в магазине
+
+- ui.entry.nick — Ваш ник
+- ui.entry.code — Код комнаты
+- ui.entry.avatar — Выберите аватар
+- ui.entry.or — или
+- ui.lobby.code — Код комнаты
+- ui.results.again — Ещё раз
+- ui.results.exit — Выйти
+- ui.shop.owned — Куплено
+- ui.shop.close — Закрыть
+- ui.waiting.default — Подождите…

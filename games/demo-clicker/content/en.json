@@ -1,0 +1,9 @@
+{
+  "clicker": {
+    "title": "Who's Faster",
+    "tap": "Tap",
+    "go": "Go!",
+    "rules": "Tap the button faster than anyone: be first to 30 taps. 3 rounds.",
+    "finished": "You are #{place}!"
+  }
+}

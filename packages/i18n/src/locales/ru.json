@@ -1,0 +1,169 @@
+{
+  "ui": {
+    "common": {
+      "ok": "ОК",
+      "cancel": "Отмена",
+      "close": "Закрыть",
+      "back": "Назад",
+      "retry": "Повторить",
+      "copy": "Копировать",
+      "error": "Что-то пошло не так",
+      "loading": "Загрузка…"
+    },
+    "entry": {
+      "title": "Добро пожаловать",
+      "nick_label": "Ваш ник",
+      "nick_placeholder": "Введите ник",
+      "avatar_label": "Аватар",
+      "create": "Создать комнату",
+      "join": "Войти по коду",
+      "code_label": "Код комнаты",
+      "code_placeholder": "ABCDE",
+      "join_confirm": "Войти",
+      "invalid_code": "Код должен состоять из 5 символов",
+      "invited": "Вас пригласили в комнату {code}",
+      "nick": "Ваш ник",
+      "code": "Код комнаты",
+      "avatar": "Выберите аватар",
+      "or": "или"
+    },
+    "lobby": {
+      "title": "Лобби",
+      "code_label": "Код комнаты",
+      "invite": "Пригласить",
+      "copied": "Скопировано",
+      "players_one": "{count} игрок",
+      "players_few": "{count} игрока",
+      "players_many": "{count} игроков",
+      "players_other": "{count} игрока",
+      "ready": "Готов",
+      "not_ready": "Не готов",
+      "start": "Начать",
+      "kick": "Выгнать",
+      "host": "Хост",
+      "offline": "Не в сети",
+      "min_players_one": "Нужен минимум {count} игрок",
+      "min_players_few": "Нужно минимум {count} игрока",
+      "min_players_many": "Нужно минимум {count} игроков",
+      "min_players_other": "Нужно минимум {count} игрока",
+      "leave": "Выйти",
+      "waiting_for_host": "Ждём, пока хост начнёт игру",
+      "code": "Код комнаты",
+      "notReady": "Не готов",
+      "readyMark": "✓"
+    },
+    "waiting": {
+      "connecting": "Подключение…",
+      "reconnecting": "Переподключение…",
+      "waiting_host": "Ждём хоста…",
+      "waiting_players": "Ждём игроков…",
+      "default": "Подождите…"
+    },
+    "results": {
+      "title": "Итоги",
+      "place": "{place} место",
+      "winner": "Победитель",
+      "score_one": "{count} очко",
+      "score_few": "{count} очка",
+      "score_many": "{count} очков",
+      "score_other": "{count} очка",
+      "play_again": "Ещё раз",
+      "leave": "Выйти",
+      "waiting_host": "Ждём, пока хост запустит новую игру",
+      "again": "Ещё раз",
+      "exit": "Выйти",
+      "waitHost": "Ждём, пока хост запустит новую игру"
+    },
+    "shop": {
+      "title": "Магазин",
+      "buy": "Купить",
+      "bought": "Куплено",
+      "watch_ad": "Смотреть рекламу",
+      "no_ads": "Без рекламы",
+      "empty": "Пока ничего нет",
+      "loading": "Загрузка товаров…",
+      "owned": "Куплено",
+      "close": "Закрыть",
+      "watchAd": "Смотреть рекламу"
+    },
+    "scoreboard": {
+      "title": "Счёт",
+      "round_score": "+{score}",
+      "total": "Всего"
+    },
+    "timer": {
+      "seconds": "{count} с"
+    },
+    "chat": {
+      "title": "Чат",
+      "placeholder": "Сообщение…",
+      "send": "Отправить",
+      "empty": "Сообщений пока нет",
+      "toggle": "Показать или скрыть чат"
+    }
+  },
+  "core": {
+    "error": {
+      "not_found": "Комната не найдена",
+      "full": "Комната заполнена",
+      "started": "Игра уже началась",
+      "network": "Нет соединения с сервером",
+      "unknown": "Неизвестная ошибка"
+    },
+    "kicked": {
+      "host": "Хост исключил вас из комнаты",
+      "idle": "Вы были неактивны слишком долго",
+      "flood": "Слишком много сообщений подряд"
+    },
+    "toast": {
+      "host_changed": "{name} теперь хост",
+      "player_joined": "{name} присоединился",
+      "player_left": "{name} вышел",
+      "player_reconnected": "{name} вернулся"
+    },
+    "phase": {
+      "round": "Раунд {round}",
+      "countdown": "Приготовьтесь!",
+      "round_end": "Раунд окончен",
+      "results": "Игра окончена"
+    }
+  },
+  "shop": {
+    "category": {
+      "avatar": "Аватары",
+      "frame": "Рамки",
+      "color": "Цвета ника",
+      "effect": "Эффекты",
+      "pack": "Наборы"
+    },
+    "product": {
+      "no_ads": "Отключить рекламу",
+      "pack": "Набор"
+    },
+    "purchase_ok": "Покупка совершена",
+    "purchase_failed": "Не удалось совершить покупку",
+    "reward_granted": "Награда получена",
+    "avatar_alien": "Аватар «Пришелец»",
+    "avatar_dino": "Аватар «Динозавр»",
+    "avatar_robot": "Аватар «Робот»",
+    "avatar_dragon": "Аватар «Дракон»",
+    "frame_gold": "Золотая рамка",
+    "frame_neon": "Неоновая рамка",
+    "frame_rainbow": "Радужная рамка",
+    "nick_red": "Красный ник",
+    "nick_cyan": "Бирюзовый ник",
+    "nick_gold": "Золотой ник",
+    "effect_confetti": "Эффект «Конфетти»",
+    "effect_sparkles": "Эффект «Искры»",
+    "no_ads": "Отключить рекламу",
+    "pack_example": "Набор «Пример»"
+  },
+  "ad": {
+    "break_title": "Рекламная пауза",
+    "loading": "Реклама загружается…",
+    "reward_granted": "Спасибо! Награда ваша",
+    "reward_unavailable": "Реклама сейчас недоступна",
+    "skip": "Пропустить",
+    "remove_hint": "Отключить рекламу можно в магазине"
+  }
+}

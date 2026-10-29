@@ -1,0 +1,42 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+      target: runtime
+      args:
+        VITE_SERVER_URL: ${VITE_SERVER_URL:-}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: 2567
+      DATA_DIR: /data
+    volumes:
+      - data:/data
+    expose:
+      - '2567'
+
+  caddy:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+      target: caddy
+      args:
+        VITE_SERVER_URL: ${VITE_SERVER_URL:-}
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      PLAY_DOMAIN: ${PLAY_DOMAIN}
+      API_DOMAIN: ${API_DOMAIN}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  data:
+  caddy_data:
+  caddy_config:

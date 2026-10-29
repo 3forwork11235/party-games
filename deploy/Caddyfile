@@ -1,0 +1,11 @@
+{$PLAY_DOMAIN} {
+	root * /srv/web
+	encode gzip zstd
+	file_server
+}
+
+{$API_DOMAIN} {
+	encode gzip
+	# WebSocket-апгрейд Caddy проксирует автоматически
+	reverse_proxy server:2567
+}

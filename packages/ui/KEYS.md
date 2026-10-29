@@ -1,0 +1,32 @@
+# i18n-ключи @party/ui
+
+- ui.entry.title — Party Games
+- ui.entry.nick — Ваш ник
+- ui.entry.avatar — Выберите аватар
+- ui.entry.create — Создать комнату
+- ui.entry.or — или
+- ui.entry.code — Код комнаты
+- ui.entry.join — Войти по коду
+- ui.lobby.code — Код комнаты
+- ui.lobby.invite — Пригласить
+- ui.lobby.ready — Готов
+- ui.lobby.notReady — Не готов
+- ui.lobby.readyMark — Готов
+- ui.lobby.start — Начать
+- ui.lobby.host — Хост
+- ui.lobby.offline — Не в сети
+- ui.lobby.kick — Выгнать
+- ui.waiting.default — Подождите…
+- ui.waiting.reconnecting — Переподключение…
+- ui.results.title — Итоги
+- ui.results.again — Ещё раз
+- ui.results.waitHost — Ждём, пока хост начнёт новую игру
+- ui.results.exit — Выйти
+- ui.shop.title — Магазин
+- ui.shop.buy — Купить
+- ui.shop.owned — Куплено
+- ui.shop.watchAd — Смотреть рекламу
+- ui.shop.close — Закрыть
+- ui.chat.title — Чат
+- ui.chat.placeholder — Сообщение
+- ui.chat.send — Отправить
