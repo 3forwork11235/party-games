@@ -36,7 +36,21 @@ export function createGameViteConfig(gameDir: string): UserConfig {
     base: './',
     envDir: repoRoot,
     plugins: [platformScripts(platform)],
-    server: { host: true, port: 5173, fs: { allow: [repoRoot] } },
+    server: {
+      host: true,
+      port: 5173,
+      fs: { allow: [repoRoot] },
+      // Туннели (tuna, cloudflared) приходят с чужим Host.
+      allowedHosts: true,
+      // Один порт наружу: сервер Colyseus доступен через /colyseus (HTTP + WebSocket).
+      proxy: {
+        '/colyseus': {
+          target: 'http://localhost:2567',
+          ws: true,
+          rewrite: (p: string) => p.replace(/^\/colyseus/, ''),
+        },
+      },
+    },
     define: {
       'import.meta.env.VITE_PLATFORM': JSON.stringify(platform),
     },

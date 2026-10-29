@@ -1,9 +1,13 @@
-/** VITE_SERVER_URL или `${ws|wss}://${hostname}:2567`. */
+/**
+ * VITE_SERVER_URL; в dev — тот же origin + /colyseus (прокси Vite, работает в LAN и через туннель);
+ * иначе `${ws|wss}://${hostname}:2567`.
+ */
 export function defaultServerUrl(): string {
-  const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env;
+  const env = (import.meta as unknown as { env?: Record<string, unknown> }).env;
   const fromEnv = env?.VITE_SERVER_URL;
-  if (fromEnv) return fromEnv;
-  const secure = typeof location !== 'undefined' && location.protocol === 'https:';
-  const host = typeof location !== 'undefined' ? location.hostname : 'localhost';
-  return `${secure ? 'wss' : 'ws'}://${host}:2567`;
+  if (typeof fromEnv === 'string' && fromEnv) return fromEnv;
+  if (typeof location === 'undefined') return 'ws://localhost:2567';
+  const ws = location.protocol === 'https:' ? 'wss' : 'ws';
+  if (env?.DEV === true) return `${ws}://${location.host}/colyseus`;
+  return `${ws}://${location.hostname}:2567`;
 }
