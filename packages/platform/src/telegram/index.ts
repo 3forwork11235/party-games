@@ -150,12 +150,12 @@ export class TelegramPlatform extends WebPlatform {
     const cloud = this.cloud();
     const json = JSON.stringify(value);
     if (!cloud || json === undefined || json.length > MAX_CLOUD_VALUE) {
-      localSave(key, value);
+      localSave(key, value, this.profile);
       return Promise.resolve();
     }
     return new Promise((resolve) => {
       cloud.setItem(cloudKey(key), json, (err) => {
-        if (err) localSave(key, value);
+        if (err) localSave(key, value, this.profile);
         resolve();
       });
     });
@@ -163,7 +163,7 @@ export class TelegramPlatform extends WebPlatform {
 
   override loadData<T>(key: string): Promise<T | null> {
     const cloud = this.cloud();
-    if (!cloud) return Promise.resolve(localLoad<T>(key));
+    if (!cloud) return Promise.resolve(localLoad<T>(key, this.profile));
     return new Promise((resolve) => {
       cloud.getItem(cloudKey(key), (err, value) => {
         if (!err && value) {
@@ -174,7 +174,7 @@ export class TelegramPlatform extends WebPlatform {
             /* fallback ниже */
           }
         }
-        resolve(localLoad<T>(key));
+        resolve(localLoad<T>(key, this.profile));
       });
     });
   }

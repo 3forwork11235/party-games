@@ -183,7 +183,7 @@ export class YandexPlatform extends WebPlatform {
         /* fallback ниже */
       }
     }
-    localSave(key, value);
+    localSave(key, value, this.profile);
   }
 
   override async loadData<T>(key: string): Promise<T | null> {
@@ -196,7 +196,7 @@ export class YandexPlatform extends WebPlatform {
         /* fallback ниже */
       }
     }
-    return localLoad<T>(key);
+    return localLoad<T>(key, this.profile);
   }
 
   override analytics(event: string, params?: Record<string, string | number | boolean>): void {

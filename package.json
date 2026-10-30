@@ -18,7 +18,8 @@
     "build:yandex": "tsx scripts/build.ts yandex",
     "build:telegram": "tsx scripts/build.ts telegram",
     "zip:yandex": "tsx scripts/zip-yandex.ts",
-    "build:site": "tsx scripts/build-site.ts"
+    "build:site": "tsx scripts/build-site.ts",
+    "check-online": "tsx scripts/check-online.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

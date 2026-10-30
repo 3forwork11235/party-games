@@ -13,7 +13,11 @@ const app = express();
 app.disable('x-powered-by');
 
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, games: GAMES.map((g) => g.slug) });
+  res.json({
+    ok: true,
+    games: GAMES.map((g) => g.slug),
+    commit: process.env.RENDER_GIT_COMMIT ?? null,
+  });
 });
 
 mountTelegram(app, {

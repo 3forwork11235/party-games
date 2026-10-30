@@ -23,5 +23,8 @@
     "@party/ui": "workspace:*",
     "colyseus": "~0.16.5",
     "colyseus.js": "^0.16.22"
+  },
+  "devDependencies": {
+    "@colyseus/testing": "~0.16.3"
   }
 }

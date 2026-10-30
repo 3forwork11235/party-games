@@ -11,12 +11,18 @@ import type {
   ShareData,
 } from '../adapter.js';
 import { showAdOverlay } from './adOverlay.js';
-import { localLoad, localSave } from './storage.js';
+import { localLoad, localSave, parseProfile } from './storage.js';
 
 const PURCHASES_KEY = 'purchases';
 
 export class WebPlatform implements PlatformAdapter {
   readonly id: PlatformId = 'web';
+  /** `?profile=<id>` на момент создания адаптера; null — прежние ключи хранилища. */
+  protected readonly profile: string | null;
+
+  constructor() {
+    this.profile = parseProfile(globalThis.location?.search ?? '');
+  }
 
   init(): Promise<void> {
     return Promise.resolve();
@@ -60,14 +66,14 @@ export class WebPlatform implements PlatformAdapter {
   }
 
   purchase(productId: string): Promise<PurchaseResult> {
-    const list = localLoad<Purchase[]>(PURCHASES_KEY) ?? [];
+    const list = localLoad<Purchase[]>(PURCHASES_KEY, this.profile) ?? [];
     const purchase: Purchase = { productId, purchaseToken: `stub-${Date.now()}` };
-    localSave(PURCHASES_KEY, [...list, purchase]);
+    localSave(PURCHASES_KEY, [...list, purchase], this.profile);
     return Promise.resolve({ ok: true, purchase });
   }
 
   getPurchases(): Promise<Purchase[]> {
-    return Promise.resolve(localLoad<Purchase[]>(PURCHASES_KEY) ?? []);
+    return Promise.resolve(localLoad<Purchase[]>(PURCHASES_KEY, this.profile) ?? []);
   }
 
   async share(data: ShareData): Promise<boolean> {
@@ -84,12 +90,12 @@ export class WebPlatform implements PlatformAdapter {
   }
 
   saveData(key: string, value: unknown): Promise<void> {
-    localSave(key, value);
+    localSave(key, value, this.profile);
     return Promise.resolve();
   }
 
   loadData<T>(key: string): Promise<T | null> {
-    return Promise.resolve(localLoad<T>(key));
+    return Promise.resolve(localLoad<T>(key, this.profile));
   }
 
   analytics(event: string, params?: Record<string, string | number | boolean>): void {

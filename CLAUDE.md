@@ -21,8 +21,9 @@ pnpm build:web|build:yandex|build:telegram <slug|all>   # → dist/<platform>/<s
 pnpm zip:yandex <slug>       # → dist/yandex/<slug>.zip
 pnpm gen-registry            # пересобрать server/src/games.generated.ts
 pnpm build:site              # все игры (web) + index.html в dist/web (GitHub Pages)
+pnpm check-online <slug>     # после push в master: ждёт деплой Render + Pages, печатает ссылки для теста
 ```
-Тест с телефонов в LAN: [docs/LOCAL_TESTING.md](docs/LOCAL_TESTING.md).
+Проверка игр — онлайн по ссылке `https://3forwork11235.github.io/party-games/<slug>/` (сервер на Render), локальный `pnpm dev` — только для отладки: [docs/LOCAL_TESTING.md](docs/LOCAL_TESTING.md).
 
 ## Правила кода
 - Контракты (`**/contracts.ts`, `platform/src/adapter.ts`, `analytics/src/events.ts`) меняет только архитектор.
@@ -44,4 +45,6 @@ pnpm build:site              # все игры (web) + index.html в dist/web (G
 ## Новая игра
 1. `pnpm new-game <slug>` → заполнить `games/<slug>/SPEC.md` по [docs/GAME_SPEC_TEMPLATE.md](docs/GAME_SPEC_TEMPLATE.md).
 2. Разбить на задачи в `games/<slug>/TASKS.md` → game-coder → game-qa.
-3. Перед публикацией: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
+3. Выложить для проверки (без отдельного вопроса): после зелёного game-qa — коммит в ветку `<slug>`, fast-forward в `master`, `git push origin master` (сайт и сервер деплоятся сами), затем `pnpm check-online <slug>`. Упал workflow — чинить и пушить снова.
+4. Проверять по ссылке, не локально: несколько игроков с одного компьютера — вкладки `…/<slug>/?profile=2`, `?profile=3`; с телефонов — та же ссылка. В финальном отчёте — ссылка и как играть по ней вдвоём/втроём.
+5. Перед публикацией в сторах: [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
