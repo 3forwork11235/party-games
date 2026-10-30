@@ -7,6 +7,8 @@ export interface Cosmetics {
   frame?: string;
   nickColor?: string;
   effect?: string;
+  /** Скин главного элемента игры (карточка, поле); виден только владельцу, на сервер не нужен. */
+  skin?: string;
 }
 
 /** Передаётся в options при create/join. */

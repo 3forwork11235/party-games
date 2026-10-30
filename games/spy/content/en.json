@@ -1,0 +1,93 @@
+{
+  "game": {
+    "title": "Spy"
+  },
+  "spy": {
+    "dealing": "Dealing roles…",
+    "packs": "Location packs",
+    "rounds": "Rounds",
+    "roundsValue": "Rounds: {n}",
+    "pack": {
+      "city": "City",
+      "travel": "Travel",
+      "leisure": "Leisure",
+      "movies": "Movie genres",
+      "space": "Space",
+      "history": "History"
+    },
+    "card": {
+      "loading": "Getting your role…",
+      "tap": "Show my card for 3 s",
+      "spyTitle": "You are the spy",
+      "spyHint": "Guess the location",
+      "location": "Location",
+      "role": "Your role"
+    },
+    "roles": {
+      "crew": "Remember the location and your role. There is a spy among you who doesn't know where you are.",
+      "spy": "You don't know where you are. Listen to the questions and answers and don't give yourself away.",
+      "seen": "Got it",
+      "seenDone": "Waiting for the others…",
+      "ready": "Ready {done}/{total}"
+    },
+    "turn": {
+      "yourTurn": "Your turn: choose who to ask",
+      "picking": "{name} is choosing who to ask…",
+      "asks": "{asker} asks {target}",
+      "answerMe": "{asker} asks you. Answer out loud and tap “Answered”",
+      "answered": "Answered",
+      "pass": "Pass the turn",
+      "questions": "Questions: {n}"
+    },
+    "board": {
+      "title": "Possible locations"
+    },
+    "actions": {
+      "guess": "Name the location",
+      "cancel": "Cancel",
+      "hint": "Hint",
+      "hintAd": "Hint 📺",
+      "callVote": "Vote {done}/{need}"
+    },
+    "guess": {
+      "pick": "Pick a location on the board",
+      "confirm": "Name “{name}”?",
+      "yes": "Yes, that's it",
+      "sent": "Answer sent…",
+      "lastChance": "You've been caught! Last chance: name the location",
+      "waiting": "The spy is guessing the location…"
+    },
+    "vote": {
+      "title": "Who is the spy? Pick one",
+      "mine": "Your vote: {name}",
+      "voted": "Voted {done}/{total}"
+    },
+    "reveal": {
+      "spyWas": "The spy was",
+      "outcome": {
+        "spy_guessed": "The spy guessed the location. The spy wins!",
+        "spy_wrong": "The spy named the wrong location. The team wins!",
+        "spy_caught": "The spy was caught. The team wins!",
+        "spy_escaped": "The spy wasn't caught. The spy wins!"
+      },
+      "guess": "The spy named: {name}",
+      "accused": "Accused: {name}",
+      "noAccused": "The votes were split, nobody was accused",
+      "votes": "Who voted for whom",
+      "voteFor": "Vote: {name}",
+      "noVote": "Did not vote"
+    }
+  },
+  "shop": {
+    "skin_dossier": "“Dossier” card",
+    "skin_noir": "“Noir” card",
+    "skin_neon": "“Neon” card",
+    "skin_galaxy": "“Galaxy” card",
+    "skin_gold": "“Gold” card",
+    "skin_comic": "“Comic” card",
+    "pack_spy_movies": "“Movie genres” pack",
+    "pack_spy_space": "“Space” pack",
+    "pack_spy_history": "“History” pack",
+    "pack_spy_all": "All location packs"
+  }
+}

@@ -1,6 +1,7 @@
+import { ownedPacks as ownedGamePacks } from '@party/monetization';
 import type { Entitlements, ProductDef } from '@party/monetization';
 import { SLUG } from './config.js';
-import { PACKS, type PackId } from './packs.js';
+import { PACKS, isPackId, type PackId } from './packs.js';
 
 function cosmetic(
   id: string,
@@ -41,10 +42,5 @@ export const WOU_MONETIZATION = {
 
 /** Доступные паки: бесплатные + купленные (бандл `who-of-us/all` раскрывается в платные). */
 export function ownedPacks(ent: Entitlements): Set<PackId> {
-  const all = ent.packs.has(`${SLUG}/all`);
-  const out = new Set<PackId>();
-  for (const p of PACKS) {
-    if (p.free || all || ent.packs.has(`${SLUG}/${p.id}`)) out.add(p.id);
-  }
-  return out;
+  return new Set([...ownedGamePacks(ent, SLUG, PACKS)].filter(isPackId));
 }

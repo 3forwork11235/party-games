@@ -1,0 +1,127 @@
+/* Шпион: экран раскрытия (roundEnd). */
+.spy-reveal {
+  flex: 1;
+  text-align: center;
+}
+.spy-reveal__label {
+  color: var(--muted);
+  font-size: 13px;
+}
+.spy-reveal__who {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: clamp(24px, 8vw, 40px);
+  font-weight: 800;
+  animation: spy-pop 0.5s ease-out;
+}
+.spy-reveal__who .spy-avatar {
+  width: 64px;
+  height: 64px;
+  font-size: 36px;
+}
+.spy-reveal__place {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: clamp(20px, 6vw, 28px);
+  font-weight: 700;
+}
+.spy-reveal__emoji {
+  font-size: 40px;
+  line-height: 1;
+}
+.spy-reveal__outcome {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-weight: 700;
+}
+.spy-reveal__outcome--spy {
+  background: rgba(255, 92, 108, 0.18);
+  color: var(--danger);
+}
+.spy-reveal__outcome--crew {
+  background: rgba(61, 220, 151, 0.18);
+  color: var(--ok);
+}
+.spy-reveal__notes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.spy-reveal__note--ok {
+  color: var(--ok);
+}
+.spy-reveal__note--bad {
+  color: var(--danger);
+}
+.spy-reveal__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+.spy-reveal__rows > .spy-reveal__label {
+  text-align: center;
+}
+.spy-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 6px 10px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.spy-row--me {
+  border-color: var(--accent);
+}
+.spy-row__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.spy-row__nick {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.spy-row__plus {
+  color: var(--ok);
+  font-weight: 700;
+}
+.spy-row__total {
+  min-width: 2ch;
+  font-weight: 700;
+  text-align: right;
+}
+.spy-row__vote {
+  padding-left: 44px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@keyframes spy-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  70% {
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spy-reveal__who {
+    animation: none;
+  }
+}

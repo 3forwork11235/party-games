@@ -82,6 +82,40 @@ importers:
         specifier: ~0.16.3
         version: 0.16.3(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(@colyseus/tools@0.16.20(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(@colyseus/ws-transport@0.16.5(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))))(colyseus.js@0.16.22)
 
+  games/spy:
+    dependencies:
+      '@colyseus/schema':
+        specifier: ^3.0.76
+        version: 3.0.76
+      '@party/analytics':
+        specifier: workspace:*
+        version: link:../../packages/analytics
+      '@party/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@party/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
+      '@party/monetization':
+        specifier: workspace:*
+        version: link:../../packages/monetization
+      '@party/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      '@party/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      colyseus:
+        specifier: ~0.16.5
+        version: 0.16.5(@colyseus/auth@0.16.6(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(express@5.3.0))(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(@colyseus/redis-driver@0.16.1(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(@colyseus/redis-presence@0.16.4(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(@colyseus/schema@3.0.76)(@colyseus/uwebsockets-transport@0.16.11(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0)))(@colyseus/ws-transport@0.16.5(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0)))
+      colyseus.js:
+        specifier: ^0.16.22
+        version: 0.16.22
+    devDependencies:
+      '@colyseus/testing':
+        specifier: ~0.16.3
+        version: 0.16.3(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(@colyseus/tools@0.16.20(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))(@colyseus/ws-transport@0.16.5(@colyseus/core@0.16.26(@colyseus/schema@3.0.76)(@pm2/io@6.1.0))))(colyseus.js@0.16.22)
+
   games/who-of-us:
     dependencies:
       '@colyseus/schema':
@@ -176,6 +210,9 @@ importers:
       '@game/demo-clicker':
         specifier: workspace:*
         version: link:../games/demo-clicker
+      '@game/spy':
+        specifier: workspace:*
+        version: link:../games/spy
       '@game/who-of-us':
         specifier: workspace:*
         version: link:../games/who-of-us

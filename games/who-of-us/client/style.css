@@ -1,7 +1,6 @@
 /* Who Of Us. Переменные — из packages/ui/src/theme.css. */
 .wou-game,
 .wou-reveal,
-.wou-packs,
 .wou-vote {
   position: relative;
   display: flex;
@@ -11,8 +10,7 @@
   max-width: 100%;
   overflow-wrap: anywhere;
 }
-.wou-game [hidden],
-.wou-packs [hidden] {
+.wou-game [hidden] {
   display: none !important;
 }
 .wou-counter {
@@ -112,46 +110,6 @@
 }
 .wou-avatar--framed {
   box-shadow: 0 0 8px currentColor;
-}
-
-/* Лобби: паки */
-.wou-packs {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: var(--pad);
-}
-.wou-packs__title {
-  font-weight: 700;
-}
-.wou-packs__list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.wou-pack {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-.wou-pack__label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-  min-width: 0;
-  min-height: var(--tap);
-}
-.wou-pack__label input {
-  width: 22px;
-  height: 22px;
-}
-.wou-pack__buy {
-  min-height: 36px;
-  padding: 0 14px;
-}
-.wou-pack--on .wou-pack__name {
-  font-weight: 600;
 }
 
 /* Раскрытие */

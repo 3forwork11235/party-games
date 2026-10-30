@@ -11,6 +11,11 @@ export interface PartyRoomHooks {
   onRoundTick?(dtMs: number): void;
   /** Таймаут раунда или вызов endRound(). Вернуть очки за раунд: playerId → points. */
   onRoundEnd(round: number): Record<string, number>;
+  /**
+   * Таймер раунда истёк. Вернуть true, если игра продолжила раунд (следующая стадия через
+   * restartRound(ms)) или сама вызвала endRound(); иначе core завершает раунд.
+   */
+  onRoundTimeout?(): boolean;
   onGameEnd?(): void;
   onPlayerJoin?(playerId: string): void;
   /** consented=false — обрыв связи (идёт окно переподключения). */
@@ -21,8 +26,8 @@ export interface PartyRoomApi {
   readonly config: GameConfig;
   /** Досрочно завершить текущий раунд (только в фазе 'round'). */
   endRound(): void;
-  /** Заново запустить таймер текущего раунда на roundMs (только в фазе 'round'). */
-  restartRound(): void;
+  /** Заново запустить таймер текущего раунда на ms (по умолчанию roundMs; только в фазе 'round'). */
+  restartRound(ms?: number): void;
   /**
    * Зарегистрировать игровое сообщение. Проходит через rate-limit,
    * обновляет lastActivity, отбрасывается вне перечисленных фаз.

@@ -31,6 +31,7 @@ export abstract class PartyRoom<S extends CoreState>
   abstract onRoundStart(round: number): void;
   abstract onRoundEnd(round: number): Record<string, number>;
   onRoundTick?(dtMs: number): void;
+  onRoundTimeout?(): boolean;
   onGameEnd?(): void;
 
   private readonly fsm: Fsm<CorePhase> = createFsm<CorePhase>({
@@ -71,11 +72,11 @@ export abstract class PartyRoom<S extends CoreState>
     if (this.state.phase === 'round') this.finishRound();
   }
 
-  restartRound(): void {
+  restartRound(ms: number = this.config.roundMs): void {
     if (this.state.phase !== 'round') return;
     this.phaseTimer?.clear();
-    this.state.phaseEndsAt = this.now() + this.config.roundMs;
-    this.phaseTimer = this.clock.setTimeout(() => this.onPhaseTimeout('round'), this.config.roundMs);
+    this.state.phaseEndsAt = this.now() + ms;
+    this.phaseTimer = this.clock.setTimeout(() => this.onPhaseTimeout('round'), ms);
   }
 
   // ---- core-сообщения ----
@@ -170,8 +171,9 @@ export abstract class PartyRoom<S extends CoreState>
   private onPhaseTimeout(phase: CorePhase): void {
     if (phase !== this.state.phase) return;
     if (phase === 'countdown') this.startRound();
-    else if (phase === 'round') this.finishRound();
-    else if (phase === 'roundEnd') this.afterRoundEnd();
+    else if (phase === 'round') {
+      if (this.onRoundTimeout?.() !== true && this.state.phase === 'round') this.finishRound();
+    } else if (phase === 'roundEnd') this.afterRoundEnd();
     else if (phase === 'adBreak') this.endAdBreak();
   }
 

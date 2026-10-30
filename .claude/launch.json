@@ -33,6 +33,12 @@
         "--strictPort"
       ],
       "port": 5174
+    },
+    {
+      "name": "spy-client",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@game/spy", "dev", "--port", "5175", "--strictPort"],
+      "port": 5175
     }
   ]
 }

@@ -27,7 +27,7 @@ export interface PlatformMonetizationConfig {
 export type MonetizationConfig = Record<PlatformId, PlatformMonetizationConfig>;
 
 export type ProductKind = 'cosmetic' | 'pack' | 'no_ads';
-export type CosmeticCategory = 'avatar' | 'frame' | 'nickColor' | 'effect';
+export type CosmeticCategory = 'avatar' | 'frame' | 'nickColor' | 'effect' | 'skin';
 
 export interface ProductDef {
   /** Внутренний id, он же productId на площадках. */

@@ -242,6 +242,50 @@ body {
   line-height: 28px;
   font-weight: 700;
 }
+.p-packs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: var(--pad);
+}
+.p-packs__title {
+  font-weight: 700;
+}
+.p-packs__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.p-pack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.p-pack__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  min-height: var(--tap);
+}
+.p-pack__label input {
+  width: 22px;
+  height: 22px;
+}
+.p-pack__buy {
+  min-height: 36px;
+  padding: 0 14px;
+}
+.p-pack--on .p-pack__name {
+  font-weight: 600;
+}
 .p-toasts {
   position: fixed;
   top: calc(8px + var(--safe-top));

@@ -4,5 +4,7 @@ export type { MonetizationOverride } from './config.js';
 export { DEFAULT_CATALOG } from './catalog.js';
 export { createAdManager } from './adManager.js';
 export type { AdManager, AdManagerOptions, Tracker } from './adManager.js';
+export { ownedPacks } from './packs.js';
+export type { PackInfo } from './packs.js';
 export { createShop } from './shop.js';
 export type { Shop, ShopItem, ShopOptions, ShopStorage } from './shop.js';

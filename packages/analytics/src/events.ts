@@ -11,6 +11,14 @@ export interface AnalyticsEventMap {
   session_length: { seconds: number };
   pack_selected: { game: string; packId: string; paid: boolean };
   question_skipped: { game: string; round: number; packId: string };
+  spy_won: { game: string; round: number; reason: 'guessed' | 'escaped'; players: number };
+  location_guessed: {
+    game: string;
+    round: number;
+    locationId: string;
+    correct: boolean;
+    early: boolean;
+  };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;

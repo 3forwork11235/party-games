@@ -25,7 +25,7 @@ export interface ShopFlow {
   addButton(parent: HTMLElement, onClose?: () => void): void;
 }
 
-const PREVIEW: Record<string, string> = { frame: '🖼️', nickColor: '🎨', effect: '✨' };
+const PREVIEW: Record<string, string> = { frame: '🖼️', nickColor: '🎨', effect: '✨', skin: '🃏' };
 
 export function createShopFlow(d: ShopFlowDeps): ShopFlow {
   const { t, shop, adManager, config } = d;

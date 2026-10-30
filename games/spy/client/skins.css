@@ -1,0 +1,116 @@
+/* Шпион: скины карточки роли (косметика, слот skin). Составные селекторы — порядок подключения не важен. */
+
+/* Досье: папка с бумагой и скрепкой */
+.spy-card.spy-card--skin_dossier {
+  border: 2px solid #a8893f;
+  border-radius: 6px 16px 16px 16px;
+  background: linear-gradient(#ecdcaa, #d8c387);
+  box-shadow: 0 3px 0 #a8893f;
+  color: #3b2f1a;
+  font-family: 'Courier New', ui-monospace, monospace;
+  outline: 2px dashed rgba(59, 47, 26, 0.35);
+  outline-offset: -8px;
+}
+.spy-card.spy-card--skin_dossier.spy-card--open::before {
+  content: '📎';
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  font-size: 22px;
+}
+
+/* Нуар: чёрно-белое кино */
+.spy-card.spy-card--skin_noir {
+  border: 1px solid #f1f1f1;
+  background:
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 9px), #0b0b0d;
+  box-shadow:
+    inset 0 0 40px rgba(255, 255, 255, 0.08),
+    0 0 0 3px #0b0b0d,
+    0 0 0 4px #777;
+  color: #f1f1f1;
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 0.03em;
+}
+.spy-card.spy-card--skin_noir .spy-card__emoji,
+.spy-card.spy-card--skin_noir .spy-card__cover-icon {
+  filter: grayscale(1) contrast(1.2);
+}
+
+/* Неон: светящаяся рамка */
+.spy-card.spy-card--skin_neon {
+  border: 2px solid #19f6ff;
+  background: #0a0a1f;
+  box-shadow:
+    0 0 12px #19f6ff,
+    inset 0 0 16px rgba(255, 43, 214, 0.35);
+  color: #e8faff;
+  text-shadow:
+    0 0 8px #19f6ff,
+    0 0 18px #ff2bd6;
+  animation: spy-neon 2.4s ease-in-out infinite;
+}
+@keyframes spy-neon {
+  50% {
+    box-shadow:
+      0 0 22px #19f6ff,
+      inset 0 0 22px rgba(255, 43, 214, 0.55);
+  }
+}
+
+/* Галактика: звёздное небо */
+.spy-card.spy-card--skin_galaxy {
+  border: 2px solid #8f7bff;
+  background:
+    radial-gradient(circle at 18% 24%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 58%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 86% 18%, #cfd8ff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 38% 82%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 30%, #ffe9a8 0 1px, transparent 2px),
+    linear-gradient(135deg, #1b0f4a, #3a1c78 55%, #0e3b6e);
+  box-shadow: 0 0 18px rgba(143, 123, 255, 0.5);
+  color: #f3eaff;
+}
+
+/* Золото: блеск, пробегающий по карточке */
+.spy-card.spy-card--skin_gold {
+  border: 2px solid #8a6508;
+  background: linear-gradient(135deg, #fff1a8, #f5c542 35%, #b8860b 70%, #ffe27a);
+  box-shadow: 0 0 14px rgba(245, 197, 66, 0.6);
+  color: #3d2a00;
+  overflow: hidden;
+}
+.spy-card.spy-card--skin_gold::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  pointer-events: none;
+  animation: spy-shine 3.2s ease-in-out infinite;
+}
+@keyframes spy-shine {
+  to {
+    left: 140%;
+  }
+}
+
+/* Комикс: жёлтая карточка с растром и чёрной тенью */
+.spy-card.spy-card--skin_comic {
+  border: 3px solid #111;
+  border-radius: 10px;
+  background:
+    radial-gradient(#e6b800 1.5px, transparent 1.6px) 0 0 / 10px 10px,
+    #ffe14d;
+  box-shadow: 5px 5px 0 #111;
+  color: #111;
+  font-family: 'Comic Sans MS', 'Marker Felt', 'Chalkboard SE', cursive;
+  transform: rotate(-1deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spy-card.spy-card--skin_neon,
+  .spy-card.spy-card--skin_gold::after {
+    animation: none;
+  }
+}

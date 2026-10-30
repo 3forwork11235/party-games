@@ -138,11 +138,14 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
 
   function enterRoundEnd(s: S): void {
     leaveGame();
-    tracker.track('round_end', {
-      game: opts.slug,
-      round: s.round,
-      durationMs: Math.max(0, client.serverNow() - roundStartedAt),
-    });
+    // после перезагрузки посреди раунда начало неизвестно — длительность не считаем
+    if (roundStartedAt > 0) {
+      tracker.track('round_end', {
+        game: opts.slug,
+        round: s.round,
+        durationMs: Math.max(0, client.serverNow() - roundStartedAt),
+      });
+    }
     const screen = createRoundEndScreen<S>(
       t,
       opts.mountRoundEnd ? { ctx: gameCtx, mount: opts.mountRoundEnd } : undefined,
@@ -184,12 +187,14 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
   function enterResults(s: S): void {
     leaveGame();
     resultsSig = '';
-    tracker.track('game_end', {
-      game: opts.slug,
-      rounds: s.totalRounds,
-      players: connected(s),
-      durationMs: Math.max(0, client.serverNow() - gameStartedAt),
-    });
+    if (gameStartedAt > 0) {
+      tracker.track('game_end', {
+        game: opts.slug,
+        rounds: s.totalRounds,
+        players: connected(s),
+        durationMs: Math.max(0, client.serverNow() - gameStartedAt),
+      });
+    }
     update = showResults;
     showResults(s);
   }

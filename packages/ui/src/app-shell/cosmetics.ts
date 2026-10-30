@@ -6,11 +6,12 @@ import type { Profile } from './session.js';
 
 const KEY = 'cosmetics';
 
-type Slot = 'frame' | 'nickColor' | 'effect';
+type Slot = 'frame' | 'nickColor' | 'effect' | 'skin';
 const SLOT_OF: Partial<Record<CosmeticCategory, Slot>> = {
   frame: 'frame',
   nickColor: 'nickColor',
   effect: 'effect',
+  skin: 'skin',
 };
 
 /** Аватары для выбора: бесплатные + платные, на которые есть entitlement. */
@@ -54,7 +55,7 @@ export function sanitizeCosmetics(
 ): Cosmetics {
   const src = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
   const out: Cosmetics = {};
-  for (const slot of ['frame', 'nickColor', 'effect'] as const) {
+  for (const slot of ['frame', 'nickColor', 'effect', 'skin'] as const) {
     const v = src[slot];
     if (typeof v === 'string' && isKnown(slot, v) && owns(slot, v, ent, catalog)) out[slot] = v;
   }
@@ -66,7 +67,7 @@ export interface CosmeticsStore {
   load(): Promise<void>;
   /** Текущий выбор (с учётом entitlement). */
   get(): Cosmetics;
-  /** Выбрать купленный/полученный товар (рамка, цвет ника, эффект). */
+  /** Выбрать купленный/полученный товар (рамка, цвет ника, эффект, скин). */
   select(product: ProductDef): Promise<void>;
 }
 

@@ -11,3 +11,4 @@ export * from './widgets/timer.js';
 export * from './widgets/toast.js';
 export * from './widgets/chat.js';
 export * from './widgets/modal.js';
+export * from './widgets/packPicker.js';

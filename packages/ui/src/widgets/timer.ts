@@ -6,6 +6,13 @@ export interface Timer extends Component {
   update(endsAt: number, serverNow: () => number): void;
 }
 
+/** Остаток времени: секунды (`59`) или `m:ss` (`5:00`) при остатке от 60 с. */
+export function formatLeft(ms: number): string {
+  const sec = Math.ceil(Math.max(0, ms) / 1000);
+  if (sec < 60) return String(sec);
+  return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`;
+}
+
 export function createTimer(): Timer {
   const bar = h('div', { class: 'p-timer__bar' });
   const text = h('span', { class: 'p-timer__text' });
@@ -24,7 +31,7 @@ export function createTimer(): Timer {
     const tick = (): void => {
       const left = Math.max(0, endsAt - serverNow());
       bar.style.width = `${Math.min(100, (left / total) * 100)}%`;
-      text.textContent = String(Math.ceil(left / 1000));
+      text.textContent = formatLeft(left);
       raf = left > 0 ? requestAnimationFrame(tick) : 0;
     };
     tick();
