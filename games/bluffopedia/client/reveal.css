@@ -1,0 +1,114 @@
+/* Блефопедия: экран раскрытия (roundEnd). */
+.bluff-reveal {
+  flex: 1;
+}
+.bluff-reveal__q {
+  color: var(--muted);
+  font-size: 15px;
+  text-align: center;
+}
+.bluff-reveal__rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+.bluff-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  background: var(--surface);
+  animation: bluff-pop 0.4s ease-out;
+}
+.bluff-entry--truth {
+  border-color: var(--ok);
+  background: rgba(61, 220, 151, 0.16);
+}
+.bluff-entry--lie {
+  border-color: var(--danger);
+}
+.bluff-entry__text {
+  font-size: 20px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.bluff-entry__voters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 32px;
+  align-items: center;
+}
+.bluff-entry__none {
+  color: var(--muted);
+  font-size: 13px;
+}
+.bluff-entry__stamp {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.bluff-entry--truth .bluff-entry__stamp {
+  color: var(--ok);
+}
+.bluff-entry--lie .bluff-entry__stamp {
+  color: var(--danger);
+}
+.bluff-entry--house .bluff-entry__stamp {
+  color: var(--muted);
+}
+.bluff-reveal__mine {
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+}
+.bluff-reveal__scores {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bluff-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.bluff-score--me {
+  outline: 2px solid var(--accent);
+}
+.bluff-score__nick {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bluff-score__plus {
+  color: var(--ok);
+  font-weight: 700;
+}
+.bluff-score__total {
+  min-width: 2ch;
+  text-align: right;
+  font-weight: 800;
+}
+@keyframes bluff-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (min-width: 900px) {
+  .bluff-reveal__rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

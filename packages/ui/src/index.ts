@@ -12,3 +12,4 @@ export * from './widgets/toast.js';
 export * from './widgets/chat.js';
 export * from './widgets/modal.js';
 export * from './widgets/packPicker.js';
+export * from './widgets/answerInput.js';

@@ -1,0 +1,30 @@
+{
+  "name": "@game/bluffopedia",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./server": "./server/index.ts",
+    "./shared": "./shared/index.ts"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p . --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@colyseus/schema": "^3.0.76",
+    "@party/analytics": "workspace:*",
+    "@party/core": "workspace:*",
+    "@party/i18n": "workspace:*",
+    "@party/monetization": "workspace:*",
+    "@party/platform": "workspace:*",
+    "@party/ui": "workspace:*",
+    "colyseus": "~0.16.5",
+    "colyseus.js": "^0.16.22"
+  },
+  "devDependencies": {
+    "@colyseus/testing": "~0.16.3"
+  }
+}

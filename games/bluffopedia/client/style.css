@@ -1,0 +1,198 @@
+/* Блефопедия. Переменные — из packages/ui/src/theme.css. Раскрытие — reveal.css, шрифты — fonts.css. */
+.bluff-lobby,
+.bluff-game,
+.bluff-reveal,
+.bluff-write,
+.bluff-vote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.bluff-lobby [hidden],
+.bluff-game [hidden],
+.bluff-reveal [hidden],
+.bluff-game[hidden] {
+  display: none !important;
+}
+
+/* Лобби: число вопросов и язык */
+.bluff-opt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: var(--pad);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.bluff-opt__title {
+  font-weight: 700;
+}
+.bluff-opt__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.bluff-opt__btn {
+  padding: 0 8px;
+  border: 2px solid transparent;
+}
+.bluff-opt__btn--on {
+  background: var(--accent);
+  color: #fff;
+}
+.bluff-opt__value {
+  color: var(--muted);
+}
+
+/* Игра */
+.bluff-game {
+  flex: 1;
+}
+.bluff-count {
+  margin: auto;
+  text-align: center;
+}
+.bluff-count__num {
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 1;
+}
+.bluff-count__text {
+  margin-top: 8px;
+  color: var(--muted);
+}
+.bluff-qcard {
+  padding: var(--pad);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.bluff-qhead {
+  color: var(--muted);
+  font-size: 13px;
+}
+.bluff-qtext {
+  margin-top: 6px;
+  font-size: clamp(18px, 5vw, 26px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.bluff-gap {
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+.bluff-hint {
+  color: var(--muted);
+  font-size: 14px;
+}
+.bluff-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bluff-mylie {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--pad);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.bluff-mylie__label {
+  color: var(--muted);
+  font-size: 13px;
+}
+.bluff-mylie__text {
+  font-size: 20px;
+  font-weight: 700;
+}
+.bluff-mylie__edit {
+  align-self: flex-start;
+  min-height: var(--tap);
+}
+.bluff-ready {
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Голосование: 1 колонка с прокруткой внутри блока, на десктопе — 2 */
+.bluff-options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.bluff-opt-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-height: var(--tap);
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 18px;
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.bluff-opt-btn:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+.bluff-opt-btn--picked {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+.bluff-opt-btn--removed .bluff-opt-btn__text {
+  text-decoration: line-through;
+}
+.bluff-opt-btn__tag {
+  color: var(--muted);
+  font-size: 12px;
+}
+.bluff-hintbtn {
+  min-height: var(--tap);
+}
+
+/* Аватар и ник */
+.bluff-avatar {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  background: var(--surface);
+  font-size: 18px;
+  line-height: 1;
+}
+.bluff-avatar--framed {
+  box-shadow: 0 0 8px currentColor;
+}
+.bluff-nick {
+  font-weight: 700;
+}
+
+@media (min-width: 900px) {
+  #app:has(.bluff-game),
+  #app:has(.bluff-reveal) {
+    max-width: 960px;
+  }
+  .bluff-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

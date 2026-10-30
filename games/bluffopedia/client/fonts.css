@@ -1,0 +1,32 @@
+/* Блефопедия: шрифты-скины (системные стеки, читаемые на кириллице и казахском). */
+.bluff-font--font_typewriter {
+  font-family: 'Courier New', Courier, 'Liberation Mono', monospace;
+  font-weight: 600;
+}
+.bluff-font--font_handwritten {
+  font-family: 'Comic Sans MS', 'Segoe Script', 'Bradley Hand', 'Marker Felt', cursive;
+  font-style: italic;
+}
+.bluff-font--font_storybook {
+  font-family: Georgia, 'Times New Roman', 'Liberation Serif', serif;
+  font-style: italic;
+}
+.bluff-font--font_neon {
+  font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  text-shadow:
+    0 0 4px #fff,
+    0 0 10px #6c7bff,
+    0 0 18px #6c7bff;
+}
+.bluff-font--font_poster {
+  font-family: Impact, 'Arial Black', 'Arial Narrow Bold', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.bluff-font--font_pixel {
+  font-family: 'Lucida Console', 'Courier New', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}

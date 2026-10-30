@@ -15,6 +15,7 @@
   "dependencies": {
     "@colyseus/schema": "^3.0.76",
     "@colyseus/ws-transport": "~0.16.5",
+    "@game/bluffopedia": "workspace:*",
     "@game/demo-clicker": "workspace:*",
     "@game/spy": "workspace:*",
     "@game/who-of-us": "workspace:*",

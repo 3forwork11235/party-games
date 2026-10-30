@@ -42,6 +42,8 @@ export interface ProductDef {
   starsPrice?: number;
   /** i18n-ключ названия. */
   titleKey: string;
+  /** Превью в магазине (эмодзи/короткий текст) вместо иконки категории. */
+  preview?: string;
 }
 
 /** Что в итоге есть у игрока (вычисляется из getPurchases + локальных наград). */

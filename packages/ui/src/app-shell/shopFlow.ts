@@ -42,7 +42,8 @@ export function createShopFlow(d: ShopFlowDeps): ShopFlow {
         priceText: it.priceText ?? '',
         owned: it.owned,
         preview:
-          it.category === 'avatar' ? it.value : it.category ? PREVIEW[it.category] : undefined,
+          it.preview ??
+          (it.category === 'avatar' ? it.value : it.category ? PREVIEW[it.category] : undefined),
       }));
   }
 

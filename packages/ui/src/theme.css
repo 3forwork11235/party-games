@@ -359,3 +359,31 @@ body {
   -webkit-user-select: none;
   user-select: none;
 }
+
+.p-answer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.p-answer__input {
+  flex: 1 1 160px;
+  min-width: 0;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  font-size: 16px;
+  font-family: inherit;
+}
+.p-answer__count {
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.p-answer__btn {
+  min-height: 48px;
+  min-width: 48px;
+  flex: 0 0 auto;
+}

@@ -19,6 +19,7 @@ export interface AnalyticsEventMap {
     correct: boolean;
     early: boolean;
   };
+  lie_fooled_count: { game: string; round: number; fooled: number; players: number };
 }
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;

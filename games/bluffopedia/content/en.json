@@ -1,0 +1,61 @@
+{
+  "game": {
+    "title": "Bluffopedia"
+  },
+  "bluff": {
+    "packs": "Question packs",
+    "rounds": "Questions",
+    "roundsValue": "Questions: {n}",
+    "lang": "Question language",
+    "langs": {
+      "ru": "Русский",
+      "kk": "Қазақша",
+      "en": "English"
+    },
+    "pack": {
+      "words": "Rare words",
+      "facts": "Strange facts",
+      "laws": "Laws and customs",
+      "records": "Records and firsts"
+    },
+    "round": "Question {n} of {total}",
+    "dealing": "Question {n} of {total}. Get ready to bluff!",
+    "write": {
+      "placeholder": "Invent a believable answer",
+      "send": "Send",
+      "hint": "Write something that sounds true. Every player fooled by your lie scores for you.",
+      "edit": "Edit",
+      "yours": "Your lie:",
+      "ready": "Ready {done}/{total}"
+    },
+    "vote": {
+      "pick": "Find the truth among the options",
+      "hint": "Hint: remove a false one",
+      "own": "your option",
+      "ready": "Voted {done}/{total}"
+    },
+    "reveal": {
+      "truth": "TRUTH · +{n} for those who found it",
+      "lie": "LIE · {names} +{n}",
+      "house": "THE GAME'S LIE",
+      "nobody": "Nobody chose it",
+      "you": "Your points for this question: +{n}"
+    },
+    "toast": {
+      "empty": "Write your lie first",
+      "truth": "That's too close to the truth, try another one",
+      "nohint": "No hint available right now"
+    }
+  },
+  "shop": {
+    "font_typewriter": "Typewriter font",
+    "font_handwritten": "Handwritten font",
+    "font_storybook": "Storybook font",
+    "font_neon": "Neon font",
+    "font_poster": "Poster font",
+    "font_pixel": "Pixel font",
+    "pack_bluff_laws": "Pack: Laws and customs",
+    "pack_bluff_records": "Pack: Records and firsts",
+    "pack_bluff_all": "All Bluffopedia packs"
+  }
+}
