@@ -40,6 +40,7 @@
       "not_ready": "Not ready",
       "start": "Start",
       "kick": "Kick",
+      "addBot": "🤖 Add a bot",
       "host": "Host",
       "offline": "Offline",
       "min_players_one": "At least {count} player is required",

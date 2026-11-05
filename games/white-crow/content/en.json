@@ -2,6 +2,7 @@
   "game": { "title": "White Crow" },
   "crow": {
     "howTo": "How to play",
+    "botsHint": "Playing solo? Add bots with the “🤖 Add bot” button above",
     "packs": "Question packs",
     "rounds": "Rounds",
     "roundsValue": "Rounds: {n}",

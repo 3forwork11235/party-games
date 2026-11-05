@@ -1,5 +1,6 @@
 import { PartyRoom } from '@party/core/server';
-import { FINAL_MULTIPLIER, ROUND_OPTIONS, gameConfig } from '../shared/config.js';
+import { planBotPicks, botDelay } from '../shared/bots.js';
+import { BOT_DELAY_MS, FINAL_MULTIPLIER, ROUND_OPTIONS, gameConfig } from '../shared/config.js';
 import { buildDeck, buildRules, pickShown } from '../shared/logic.js';
 import {
   MSG_HELLO,
@@ -22,6 +23,9 @@ export class CrowRoom extends PartyRoom<CrowState> {
   /** Снимки подглядывания текущего раунда. */
   private snapshots = new Map<string, number[]>();
   private deck: string[] = [];
+  /** Диапазон задержки ботов (переопределяется в тестах). */
+  protected botDelayRange: readonly [number, number] = BOT_DELAY_MS;
+  private botTimers: { clear(): void }[] = [];
   private readonly usedInRoom = new Set<string>();
 
   protected createState(): CrowState {
@@ -65,9 +69,39 @@ export class CrowRoom extends PartyRoom<CrowState> {
     this.clearRound();
     this.state.questionId = this.deck[round - 1] ?? '';
     this.state.options.push(...pickShown(this.connectedCount()));
+    this.scheduleBots(round);
+  }
+
+  onGameEnd(): void {
+    this.clearBotTimers();
+  }
+
+  private scheduleBots(round: number): void {
+    const botIds = this.getPlayers()
+      .filter((p) => p.connected && this.isBot(p.id))
+      .map((p) => p.id);
+    if (botIds.length === 0) return;
+    const rule = (this.state.rules[round - 1] ?? 'flock') as Rule;
+    const plan = planBotPicks(rule, this.state.options.toArray(), botIds, Math.random);
+    for (const [id, option] of plan) {
+      const ms = botDelay(Math.random, this.botDelayRange);
+      this.botTimers.push(
+        this.clock.setTimeout(() => {
+          if (this.state.phase === 'round' && this.state.round === round) {
+            this.handlePick(id, { option });
+          }
+        }, ms),
+      );
+    }
+  }
+
+  private clearBotTimers(): void {
+    for (const t of this.botTimers) t.clear();
+    this.botTimers = [];
   }
 
   onRoundEnd(round: number): Record<string, number> {
+    this.clearBotTimers();
     const rule = (this.state.rules[round - 1] ?? 'flock') as Rule;
     const mult = round >= this.state.totalRounds ? FINAL_MULTIPLIER : 1;
     for (const [id, option] of this.picks) this.state.picks.set(id, option);
@@ -84,6 +118,7 @@ export class CrowRoom extends PartyRoom<CrowState> {
   }
 
   private clearRound(): void {
+    this.clearBotTimers();
     this.picks.clear();
     this.snapshots.clear();
     this.state.picked.clear();

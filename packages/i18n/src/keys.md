@@ -33,6 +33,7 @@
 - `ui.lobby.not_ready` — Не готов
 - `ui.lobby.start` — Начать
 - `ui.lobby.kick` — Выгнать
+- `ui.lobby.addBot` — 🤖 Добавить бота (кнопка хоста в лобби)
 - `ui.lobby.host` — Хост
 - `ui.lobby.offline` — Не в сети
 - `ui.lobby.min_players_one` — Нужен минимум {count} игрок

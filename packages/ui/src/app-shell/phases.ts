@@ -103,12 +103,15 @@ export function createPhaseController<S extends ICoreState>(d: PhaseDeps<S>): Ph
     const lobby = createLobbyScreen({
       t,
       minPlayers: opts.gameConfig.minPlayers,
+      maxPlayers: opts.gameConfig.maxPlayers,
+      maxBots: opts.gameConfig.maxBots,
       nickColors: NICK_COLORS,
       frameColors: FRAME_COLORS,
       onInvite: () => invite(client.code ?? s.code),
       onReady: (ready) => client.send('core:ready', { ready }),
       onStart: () => client.send('core:start', {}),
       onKick: (playerId) => client.send('core:kick', { playerId }),
+      onAddBot: () => client.send('core:addBot', {}),
     });
     router.show(lobby);
     if (opts.mountLobby) {

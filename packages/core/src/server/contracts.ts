@@ -40,6 +40,8 @@ export interface PartyRoomApi {
   /** Подключённые и отключённые (в окне реконнекта) игроки. */
   getPlayers(): IPlayer[];
   sendToPlayer(playerId: string, type: string, payload: unknown): void;
+  /** Игрок — бот, добавленный хостом (без клиента; его ходы делает игра). */
+  isBot(playerId: string): boolean;
   /** Серверное время, мс. Использовать вместо Date.now() (подменяется в тестах). */
   now(): number;
 }

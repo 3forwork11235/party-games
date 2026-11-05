@@ -8,8 +8,10 @@ import {
   type ServerMessages,
 } from '../shared/contracts.js';
 import { AVATARS, FRAMES, NICK_COLORS, PREMIUM_AVATARS } from '../shared/avatars.js';
+import { isBotId } from '../shared/bots.js';
 import { generateRoomCode } from '../shared/roomCode.js';
 import { sanitizeNick } from '../shared/sanitize.js';
+import { createBotPlayer } from './bots.js';
 import { ClientLimiter } from './clientLimiter.js';
 import { CoreState, Player } from './schema.js';
 
@@ -34,6 +36,8 @@ export abstract class PartyRoomCore<S extends CoreState> extends Room<S> {
   private readonly lastActivity = new Map<string, number>();
   private readonly banned = new Set<string>();
   private readonly forced = new Set<string>();
+  private readonly bots = new Set<string>();
+  private botSeq = 0;
   private code = '';
 
   get config(): GameConfig {
@@ -79,6 +83,25 @@ export abstract class PartyRoomCore<S extends CoreState> extends Room<S> {
     return Array.from(this.state.players.values());
   }
 
+  isBot(playerId: string): boolean {
+    return this.bots.has(playerId);
+  }
+
+  /** Добавить бота (только lobby, в пределах maxPlayers и config.maxBots). Возвращает id или null. */
+  protected addBot(): string | null {
+    const players = this.state.players;
+    if (this.state.phase !== 'lobby' || players.size >= this.gameConfig.maxPlayers) return null;
+    if (this.bots.size >= (this.gameConfig.maxBots ?? 0)) return null;
+    const nicks = new Set(this.getPlayers().map((p) => p.nick));
+    const bot = createBotPlayer(++this.botSeq, nicks);
+    players.set(bot.id, bot);
+    this.bots.add(bot.id);
+    this.toast('core.toast.player_joined', { name: bot.nick });
+    this.onPlayerJoin?.(bot.id);
+    this.onRosterChanged();
+    return bot.id;
+  }
+
   protected connectedCount(): number {
     return this.getPlayers().filter((p) => p.connected).length;
   }
@@ -121,6 +144,14 @@ export abstract class PartyRoomCore<S extends CoreState> extends Room<S> {
 
   /** Кик по решению хоста: игрок не сможет вернуться в эту комнату. */
   protected kickByHost(playerId: string): void {
+    if (this.bots.has(playerId)) {
+      const bot = this.state.players.get(playerId);
+      this.bots.delete(playerId);
+      this.state.players.delete(playerId);
+      if (bot) this.toast('core.toast.player_left', { name: bot.nick });
+      this.onRosterChanged();
+      return;
+    }
     this.banned.add(playerId);
     const client = this.clientOf(playerId);
     if (client) {
@@ -148,7 +179,7 @@ export abstract class PartyRoomCore<S extends CoreState> extends Room<S> {
   async onJoin(client: Client, raw: Partial<JoinOptions> | undefined): Promise<void> {
     const opts = raw ?? {};
     const playerId = typeof opts.playerId === 'string' ? opts.playerId.slice(0, 64) : '';
-    if (!playerId) throw new ServerError(4001, 'bad_options');
+    if (!playerId || isBotId(playerId)) throw new ServerError(4001, 'bad_options');
     if (this.banned.has(playerId)) throw new ServerError(4006, 'kicked');
     const players = this.state.players;
     let player = players.get(playerId);
@@ -237,7 +268,9 @@ export abstract class PartyRoomCore<S extends CoreState> extends Room<S> {
 
   /** Хост уходит окончательно: следующий подключённый по порядку входа. */
   private pickHost(): void {
-    const next = this.getPlayers().find((p) => p.connected && p.id !== this.state.hostId);
+    const next = this.getPlayers().find(
+      (p) => p.connected && p.id !== this.state.hostId && !this.bots.has(p.id),
+    );
     this.state.hostId = next?.id ?? '';
     if (next) this.toast('core.toast.host_changed', { name: next.nick });
   }

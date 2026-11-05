@@ -1,10 +1,13 @@
-import type { ICoreState, IPlayer } from '@party/core/shared';
+import { isBotId, type ICoreState, type IPlayer } from '@party/core/shared';
 import { clear, h } from '../dom.js';
 import type { Component, TFunction } from '../types.js';
 
 export interface LobbyProps {
   t: TFunction;
   minPlayers: number;
+  maxPlayers?: number;
+  /** Сколько ботов хост может добавить (нет/0 — кнопки нет). */
+  maxBots?: number;
   /** id → css-цвет ника */
   nickColors?: Record<string, string>;
   /** id рамки → css-цвет рамки */
@@ -13,6 +16,7 @@ export interface LobbyProps {
   onReady(ready: boolean): void;
   onStart(): void;
   onKick(playerId: string): void;
+  onAddBot?(): void;
 }
 
 export type LobbyState = Pick<ICoreState, 'code' | 'hostId'> & {
@@ -44,11 +48,18 @@ export function createLobbyScreen(props: LobbyProps): LobbyScreen {
     t('ui.lobby.invite'),
   );
 
+  const addBotBtn = h(
+    'button',
+    { class: 'p-btn', type: 'button', onClick: () => props.onAddBot?.() },
+    t('ui.lobby.addBot'),
+  );
+
   const el = h('div', { class: 'p-screen p-lobby' }, [
     h('div', { class: 'p-muted', style: 'text-align:center' }, t('ui.lobby.code')),
     code,
     inviteBtn,
     list,
+    addBotBtn,
     readyBtn,
     startBtn,
   ]);
@@ -61,6 +72,11 @@ export function createLobbyScreen(props: LobbyProps): LobbyScreen {
     readyBtn.textContent = myReady ? t('ui.lobby.notReady') : t('ui.lobby.ready');
     startBtn.hidden = !isHost;
     startBtn.disabled = players.filter((p) => p.connected).length < props.minPlayers;
+    const botCount = players.filter((p) => isBotId(p.id)).length;
+    const maxBots = props.maxBots ?? 0;
+    addBotBtn.hidden = !isHost || maxBots <= 0;
+    addBotBtn.disabled =
+      botCount >= maxBots || (props.maxPlayers !== undefined && players.length >= props.maxPlayers);
     clear(list);
     for (const p of players) {
       const frame = props.frameColors?.[p.frame];

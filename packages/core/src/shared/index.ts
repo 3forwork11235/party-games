@@ -5,3 +5,4 @@ export * from './sanitize.js';
 export * from './text.js';
 export * from './rateLimit.js';
 export * from './fsm.js';
+export * from './bots.js';

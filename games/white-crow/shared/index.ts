@@ -1,3 +1,4 @@
+export * from './bots.js';
 export * from './catalog.js';
 export * from './config.js';
 export * from './logic.js';

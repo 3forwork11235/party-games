@@ -36,6 +36,10 @@ export function mountLobby(
     ),
   ]);
 
+  const botsHint = h('div', { class: 'crow-how__hint' }, t('crow.botsHint'));
+  botsHint.hidden = true;
+  how.append(botsHint);
+
   const picker = createPackPicker({
     t,
     title: t('crow.packs'),
@@ -92,6 +96,7 @@ export function mountLobby(
   return {
     update(state) {
       isHost = state.hostId === me;
+      botsHint.hidden = !isHost;
       packs = listOf(state.packs);
       rounds = state.rounds;
       picker.update(packs, isHost);

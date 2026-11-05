@@ -54,6 +54,7 @@ export abstract class PartyRoom<S extends CoreState>
     this.onMessage('core:kick', (c, m: ClientMessages['core:kick']) => this.handleKick(c, m));
     this.onMessage('core:chat', (c, m: ClientMessages['core:chat']) => this.handleChat(c, m));
     this.onMessage('core:adDone', (c) => this.handleAdDone(c));
+    this.onMessage('core:addBot', (c) => this.handleAddBot(c));
     this.onMessage('core:restart', (c) => this.handleRestart(c));
   }
 
@@ -130,6 +131,10 @@ export abstract class PartyRoom<S extends CoreState>
     if (!id || this.state.phase !== 'adBreak') return;
     this.adDone.add(id);
     this.checkAdBreak();
+  }
+
+  private handleAddBot(client: Client): void {
+    if (this.hostId(client) && this.state.phase === 'lobby') this.addBot();
   }
 
   private handleRestart(client: Client): void {
@@ -215,7 +220,9 @@ export abstract class PartyRoom<S extends CoreState>
 
   private checkAdBreak(): void {
     if (this.state.phase !== 'adBreak' || !this.adMinPassed) return;
-    const waiting = this.getPlayers().some((p) => p.connected && !this.adDone.has(p.id));
+    const waiting = this.getPlayers().some(
+      (p) => p.connected && !this.isBot(p.id) && !this.adDone.has(p.id),
+    );
     if (!waiting) this.endAdBreak();
   }
 

@@ -35,6 +35,8 @@ export interface GameConfig {
   adBreakMaxMs: number; // не ждать дольше, даже если кто-то смотрит рекламу
   reconnectSec: number; // окно allowReconnection
   idleKickSec: number; // кик за отсутствие сообщений в фазе lobby/round
+  /** Сколько ботов хост может добавить в лобби (нет/0 — боты выключены). Ходы ботов делает игра. */
+  maxBots?: number;
 }
 
 export const DEFAULT_GAME_CONFIG: Omit<GameConfig, 'slug'> = {
@@ -82,6 +84,7 @@ export interface ClientMessages {
   'core:chat': { text: string }; // 1..200 символов
   'core:adDone': Record<string, never>; // клиент закончил рекламную паузу
   'core:restart': Record<string, never>; // только хост, в results → lobby
+  'core:addBot': Record<string, never>; // только хост, в lobby, если config.maxBots > 0
 }
 
 /** Сообщения сервер → клиент (core). */
