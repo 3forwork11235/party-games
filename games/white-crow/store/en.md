@@ -4,7 +4,7 @@
 Odd Crow
 
 ## Short description (≤ 100)
-Guess what your friends will pick: join the flock, make a pair or be the odd crow! Online, 3–8 players.
+Guess what friends will pick: join the flock, make a pair or be the odd crow! Online, 3–8 players.
 
 ## Full description (≤ 1000)
 Odd Crow is a fun party game for 3 to 8 players. A question appears on screen: "Perfect breakfast?" with several emoji options: 🥞 pancakes, 🍳 fried eggs, 🍕 leftover pizza. Everyone secretly picks one, then the picks are revealed to show who matched whom.
@@ -16,12 +16,11 @@ The twist is that the round rule keeps changing:
 In the final round all points are doubled!
 
 How to play:
-1. One player creates a room and shares the code. Everyone else joins by code from a phone or computer.
+1. One player creates a room; others join by code from a phone or computer.
 2. The host chooses question packs and the number of rounds: 6, 9 or 12.
 3. Each round has a rule, a question and 20 seconds to choose. You can change your mind, or 🔭 peek at where your friends are leaning.
-4. Avatars fly to the options and the arguments begin: "Who even picks pizza for breakfast?!"
 
-The Everyday and Fantasy packs are free from the start; Food and World can be unlocked. All questions are harmless and suitable for any age. Languages: English, Russian, Kazakh.
+The Everyday and Fantasy packs are free from the start; Food and World can be unlocked. All questions are harmless. Languages: English, Russian, Kazakh.
 
 ## Tags (5–8)
 multiplayer, party game, friends, guessing, online, mobile, questions, group game
