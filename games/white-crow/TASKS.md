@@ -79,3 +79,26 @@
 - `pnpm build|test|lint`, `pnpm build:web|build:yandex|build:telegram white-crow`, `pnpm zip:yandex white-crow`.
 - Проверка вёрстки 360×640 и 1280×720 (Playwright, локальный `pnpm dev white-crow`).
 - Коммит, ff в `master`, push, `pnpm check-online white-crow`.
+
+## Группа 4 — боты для игры в одиночку (после релиза)
+
+Сделано архитектором (контракты): `GameConfig.maxBots?: number`, `ClientMessages['core:addBot']`, `PartyRoomApi.isBot(playerId)`.
+
+### E1. Движок: боты в лобби — @game-coder
+Файлы: `packages/core/src/shared/{bots,index}.ts`, `packages/core/src/server/{PartyRoomCore,PartyRoom}.ts`, `packages/core/tests/bots.test.ts` (порт **2575**), `packages/ui/src/screens/lobby.ts`, `packages/ui/src/app-shell/phases.ts`, `packages/i18n/src/locales/*` (ключ `ui.lobby.addBot`), тесты ui при необходимости. Не трогать `games/*`.
+- `core/shared/bots.ts`: `BOT_ID_PREFIX = 'bot:'`, `BOT_AVATAR = '🤖'`, `BOT_NICKS` (8 коротких нейтральных имён латиницей: Robo, Chip, Pixel, Byte, Nova, Echo, Bolt, Zed), `isBotId(id): boolean`.
+- `PartyRoomCore`: приватный `Set` ботов; `protected addBot(): string | null` — только в lobby, `players.size < maxPlayers` и ботов < `config.maxBots ?? 0`; Player: id `bot:<n>` (n растёт, не переиспользуется), ник — первый свободный из `BOT_NICKS`, аватар `BOT_AVATAR`, `connected = true`, `ready = true`, `sessionId = ''`; toast `core.toast.player_joined`; `onPlayerJoin?.(id)`; `onRosterChanged()`. `isBot(id)`. `onJoin` отклоняет playerId с префиксом `bot:` (4001 `bad_options`). `kickByHost(bot)` — удалить из `players` и набора ботов (без бана), toast `core.toast.player_left`, `onRosterChanged()`. `pickHost` никогда не выбирает бота. `getPlayers`/`connectedCount` ботов включают (боты считаются для minPlayers и досрочных концов).
+- `PartyRoom`: `core:addBot` — только хост, только lobby → `addBot()`. `checkAdBreak` не ждёт `core:adDone` от ботов. `handleRestart` ботов оставляет.
+- ui `lobby.ts`: проп `maxBots?: number` и `onAddBot()`; хосту при `maxBots > 0` — кнопка «🤖 Добавить бота» (`ui.lobby.addBot`), скрыта/disabled при `players ≥ maxPlayers` или ботов (по `isBotId`) ≥ `maxBots`; кик бота — существующей кнопкой ✕. Нужен `maxPlayers` в пропсах. `phases.ts` передаёт из `gameConfig`, `onAddBot` → `client.send('core:addBot', {})`.
+- i18n `ui.lobby.addBot`: ru «🤖 Добавить бота», kk «🤖 Бот қосу», en «🤖 Add a bot» (+ `keys.md`, если там перечислены ключи).
+- Тесты core (`bots.test.ts`, тестовая комната с `maxBots: 2`, как `tests/helpers.ts`): addBot только хост и только в lobby; лимиты maxBots/maxPlayers; без `maxBots` — игнор; бот засчитывается в minPlayers (1 человек + 1 бот стартуют); кик бота хостом; хост уходит — новым хостом не становится бот; adBreak не ждёт ботов (заканчивается после adBreakMinMs, когда люди прислали adDone); playerId `bot:x` при входе → ошибка.
+- Готово: build/test/lint `@party/core`, `@party/ui`, `@party/i18n` и всех игр зелёные (`pnpm -r build`).
+
+### G3. Боты в «Белой вороне» — @game-coder
+Зависит от E1 только сигнатурами (`isBot`, `config.maxBots`, `core:addBot`): E1 делается параллельно — если на момент тестов его ещё нет, подожди. Файлы: `games/white-crow/shared/{config,bots,index}.ts`, `games/white-crow/server/CrowRoom.ts` (+ `server/botDriver.ts`, если удобнее), `games/white-crow/tests/{bots,room}.test.ts`, `games/white-crow/client/lobby.ts`, `games/white-crow/content/{ru,kk,en}.json`.
+- `config.ts`: `maxBots: 7` в `gameConfig`; `BOT_DELAY_MS = [2000, 9000] as const`.
+- `shared/bots.ts` (чистая логика, `rnd` последним): `planBotPicks(rule, options: number[], botIds: string[], rnd): Map<string, number>` — общий «любимый» вариант раунда `fav` (случайный из `options`); flock: каждый бот с вероятностью 0.6 берёт `fav`, иначе случайный; pair: с вероятностью 0.35 `fav`, иначе случайный; odd: случайный. Ботам не известны выборы людей (не жульничают). `botDelay(rnd): number` в диапазоне `BOT_DELAY_MS`.
+- `CrowRoom`: в `onRoundStart` — для ботов из `getPlayers()` (`isBot`) спланировать выборы и поставить `this.clock.setTimeout` на `botDelay`, по таймеру — тот же путь, что у `pick` (валидация, `picked`, досрочный конец). Таймеры очищать в `onRoundStart`, `onRoundEnd`, `onGameEnd`. Боты не подглядывают.
+- `client/lobby.ts`: под «Как играть» подсказка хосту `crow.botsHint` («Играешь один? Добавь ботов кнопкой «🤖 Добавить бота» выше»), остальным не показывать.
+- Тесты: `bots.test.ts` — `planBotPicks` (только из `options`, по боту на каждого, детерминизм с фиксированным `rnd`, на flock с `rnd`→0 все на `fav`), `botDelay` в диапазоне. `room.test.ts` — 1 человек + 2 бота (`core:addBot`) проходят партию из 6 раундов до results: в каждом раунде боты попадают в `picked`, раунд заканчивается досрочно, когда выбрал человек и боты; добавлять ботов может только хост.
+- Готово: build/test/lint `@game/white-crow` зелёные; `pnpm build:web white-crow`.
