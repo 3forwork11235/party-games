@@ -18,6 +18,7 @@
     "@game/bluffopedia": "workspace:*",
     "@game/demo-clicker": "workspace:*",
     "@game/spy": "workspace:*",
+    "@game/white-crow": "workspace:*",
     "@game/who-of-us": "workspace:*",
     "@party/core": "workspace:*",
     "@party/monetization": "workspace:*",
