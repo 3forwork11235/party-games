@@ -1,5 +1,43 @@
 {
-  "game": {
-    "title": "White Crow"
+  "game": { "title": "Белая ворона" },
+  "crow": {
+    "howTo": "Как играть",
+    "packs": "Паки вопросов",
+    "rounds": "Раундов",
+    "roundsValue": "Раундов: {n}",
+    "round": "Раунд {round} из {total}",
+    "final": "Финал: очки ×2",
+    "picked": "Выбрали {done}/{total}",
+    "peek": "🔭 Подсмотреть 📺",
+    "peekHint": "Число игроков на каждом варианте: {n}",
+    "waiting": "Выбор принят. Можно передумать!",
+    "choose": "Выбери вариант",
+    "noPoints": "Никто не получил очков",
+    "summaryOdd": "Белые вороны: {names}",
+    "summaryPair": "Пары: {names}",
+    "summaryFlock": "Стая: {names}",
+    "tagPair": "пара!",
+    "tagOdd": "белая ворона!",
+    "titleOdd": "Главная белая ворона: {names}",
+    "titleFlock": "Душа стаи: {names}",
+    "rule": {
+      "flock": { "name": "Стая", "desc": "+1 за каждого, кто выбрал то же, что и ты" },
+      "pair": { "name": "Пара", "desc": "+3, если с тобой совпал ровно один игрок" },
+      "odd": { "name": "Белая ворона", "desc": "+3, если больше никто не выбрал твой вариант" }
+    },
+    "pack": { "everyday": "Быт", "fantasy": "Фэнтези", "food": "Еда", "world": "Мир" },
+    "toast": {
+      "peek": "{name} подсмотрел выборы 🔭",
+      "peekUsed": "Подсмотреть можно один раз за партию"
+    }
+  },
+  "shop": {
+    "skin_feather": "Скин «Перья»",
+    "skin_neon": "Скин «Неон»",
+    "skin_paper": "Скин «Тетрадь»",
+    "skin_gold": "Скин «Золото»",
+    "pack_crow_food": "Пак «Еда»",
+    "pack_crow_world": "Пак «Мир»",
+    "pack_crow_all": "Все паки"
   }
 }

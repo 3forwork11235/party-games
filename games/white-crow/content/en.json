@@ -1,5 +1,43 @@
 {
-  "game": {
-    "title": "White Crow"
+  "game": { "title": "White Crow" },
+  "crow": {
+    "howTo": "How to play",
+    "packs": "Question packs",
+    "rounds": "Rounds",
+    "roundsValue": "Rounds: {n}",
+    "round": "Round {round} of {total}",
+    "final": "Final: points ×2",
+    "picked": "Picked {done}/{total}",
+    "peek": "🔭 Peek 📺",
+    "peekHint": "Players on each option: {n}",
+    "waiting": "Choice saved. You can change your mind!",
+    "choose": "Pick an option",
+    "noPoints": "Nobody scored",
+    "summaryOdd": "White crows: {names}",
+    "summaryPair": "Pairs: {names}",
+    "summaryFlock": "Flock: {names}",
+    "tagPair": "pair!",
+    "tagOdd": "white crow!",
+    "titleOdd": "Top white crow: {names}",
+    "titleFlock": "Soul of the flock: {names}",
+    "rule": {
+      "flock": { "name": "Flock", "desc": "+1 for everyone who picked the same as you" },
+      "pair": { "name": "Pair", "desc": "+3 if exactly one other player matched you" },
+      "odd": { "name": "White Crow", "desc": "+3 if nobody else picked your option" }
+    },
+    "pack": { "everyday": "Everyday", "fantasy": "Fantasy", "food": "Food", "world": "World" },
+    "toast": {
+      "peek": "{name} peeked at the picks 🔭",
+      "peekUsed": "You can peek once per game"
+    }
+  },
+  "shop": {
+    "skin_feather": "Skin \"Feathers\"",
+    "skin_neon": "Skin \"Neon\"",
+    "skin_paper": "Skin \"Notebook\"",
+    "skin_gold": "Skin \"Gold\"",
+    "pack_crow_food": "Pack \"Food\"",
+    "pack_crow_world": "Pack \"World\"",
+    "pack_crow_all": "All packs"
   }
 }

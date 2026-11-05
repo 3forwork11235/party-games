@@ -1,0 +1,40 @@
+/* Белая ворона: скины кнопок вариантов (косметика, слот skin). Составные селекторы. */
+.crow-options.crow-skin--skin_feather .crow-option {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.9) 0 6px, transparent 7px),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.7) 0 5px, transparent 6px),
+    linear-gradient(135deg, #fdf6ff, #dbeafe);
+  color: #243044;
+}
+.crow-options.crow-skin--skin_neon .crow-option {
+  background: #0b0b1a;
+  color: #e8f7ff;
+  border-color: #19e6ff;
+  box-shadow:
+    0 0 10px #19e6ff,
+    0 0 4px #ff2bd6 inset;
+}
+.crow-options.crow-skin--skin_neon .crow-option--on {
+  border-color: #ff2bd6;
+  box-shadow:
+    0 0 14px #ff2bd6,
+    0 0 6px #19e6ff inset;
+}
+.crow-options.crow-skin--skin_paper .crow-option {
+  background-color: #fffef5;
+  background-image:
+    linear-gradient(rgba(70, 120, 200, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 120, 200, 0.25) 1px, transparent 1px);
+  background-size: 14px 14px;
+  color: #2a2a3a;
+}
+.crow-options.crow-skin--skin_gold .crow-option {
+  background: linear-gradient(135deg, #fff1b8, #f2c14e 50%, #b8860b);
+  color: #3a2800;
+  border-color: #8a6508;
+}
+.crow-options.crow-skin--skin_feather .crow-option--on,
+.crow-options.crow-skin--skin_paper .crow-option--on,
+.crow-options.crow-skin--skin_gold .crow-option--on {
+  border-color: var(--accent);
+}
