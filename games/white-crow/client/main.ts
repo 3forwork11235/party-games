@@ -3,10 +3,10 @@ import en from '../content/en.json';
 import kk from '../content/kk.json';
 import ru from '../content/ru.json';
 import { gameConfig, SLUG } from '../shared/config.js';
-import type { WhiteCrowPublicState } from '../shared/types.js';
+import type { CrowPublicState } from '../shared/types.js';
 import { mountGame } from './game.js';
 
-void startPartyApp<WhiteCrowPublicState>({
+void startPartyApp<CrowPublicState>({
   slug: SLUG,
   gameConfig,
   messages: { ru, kk, en },

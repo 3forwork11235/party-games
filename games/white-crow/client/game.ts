@@ -1,42 +1,20 @@
 import type { GameContext, GameView } from '@party/ui/app-shell';
-import { MSG_TAP } from '../shared/messages.js';
-import type { WhiteCrowPublicState } from '../shared/types.js';
+import type { CrowPublicState } from '../shared/types.js';
 
-/** Монтирует игровое поле в container. Пока — пустой canvas, по нажатию шлёт намерение. */
+/** Заглушка до задачи G2: показывает questionId. */
 export function mountGame(
   container: HTMLElement,
-  ctx: GameContext<WhiteCrowPublicState>,
-): GameView<WhiteCrowPublicState> {
-  const canvas = document.createElement('canvas');
-  canvas.className = 'p-no-context';
-  canvas.style.cssText = 'width:100%;flex:1;min-height:240px;touch-action:none';
-  container.append(canvas);
-
-  const draw = (taps: number): void => {
-    const g = canvas.getContext('2d');
-    if (!g) return;
-    canvas.width = canvas.clientWidth || 320;
-    canvas.height = canvas.clientHeight || 320;
-    g.fillStyle = '#1b1f2a';
-    g.fillRect(0, 0, canvas.width, canvas.height);
-    g.fillStyle = '#fff';
-    g.font = '48px sans-serif';
-    g.textAlign = 'center';
-    g.fillText(String(taps), canvas.width / 2, canvas.height / 2);
-  };
-
-  const onTap = (e: PointerEvent): void => {
-    ctx.client.sendGame(MSG_TAP, { x: e.offsetX, y: e.offsetY });
-  };
-  canvas.addEventListener('pointerdown', onTap);
-
+  ctx: GameContext<CrowPublicState>,
+): GameView<CrowPublicState> {
+  void ctx;
+  const el = document.createElement('div');
+  container.append(el);
   return {
     update(state) {
-      draw(state.taps);
+      el.textContent = state.questionId;
     },
     destroy() {
-      canvas.removeEventListener('pointerdown', onTap);
-      canvas.remove();
+      el.remove();
     },
   };
 }
