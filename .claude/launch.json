@@ -37,8 +37,28 @@
     {
       "name": "spy-client",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "@game/spy", "dev", "--port", "5175", "--strictPort"],
+      "runtimeArgs": [
+        "--filter",
+        "@game/spy",
+        "dev",
+        "--port",
+        "5175",
+        "--strictPort"
+      ],
       "port": 5175
+    },
+    {
+      "name": "billiards-client",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@game/elite-billiards",
+        "dev",
+        "--port",
+        "5176",
+        "--strictPort"
+      ],
+      "port": 5176
     }
   ]
 }

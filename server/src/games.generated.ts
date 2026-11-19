@@ -2,8 +2,9 @@
 import type { GameServerModule } from '@party/core/server';
 import * as g0 from '@game/bluffopedia/server';
 import * as g1 from '@game/demo-clicker/server';
-import * as g2 from '@game/spy/server';
-import * as g3 from '@game/white-crow/server';
-import * as g4 from '@game/who-of-us/server';
+import * as g2 from '@game/elite-billiards/server';
+import * as g3 from '@game/spy/server';
+import * as g4 from '@game/white-crow/server';
+import * as g5 from '@game/who-of-us/server';
 
-export const GAMES: GameServerModule[] = [g0, g1, g2, g3, g4];
+export const GAMES: GameServerModule[] = [g0, g1, g2, g3, g4, g5];

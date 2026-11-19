@@ -17,6 +17,7 @@
     "@colyseus/ws-transport": "~0.16.5",
     "@game/bluffopedia": "workspace:*",
     "@game/demo-clicker": "workspace:*",
+    "@game/elite-billiards": "workspace:*",
     "@game/spy": "workspace:*",
     "@game/white-crow": "workspace:*",
     "@game/who-of-us": "workspace:*",

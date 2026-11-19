@@ -1,0 +1,43 @@
+{
+  "game": {
+    "title": "Elite Billiards"
+  },
+  "billiards": {
+    "you": "You",
+    "yourShot": "Your shot!",
+    "turnOf": "{nick} is up",
+    "rack": "Rack {n}",
+    "left": "Balls left: {n}",
+    "power": "Power",
+    "tip": "Strike point",
+    "shoot": "Shoot",
+    "nudgeLeft": "Nudge left",
+    "nudgeRight": "Nudge right",
+    "foul": {
+      "scratch": "Foul: cue ball potted −{n}",
+      "noHit": "Foul: missed −{n}",
+      "timeout": "Foul: time −{n}"
+    },
+    "noPoints": "no points",
+    "hint": {
+      "hand": "Ball in hand: drag the cue ball inside the kitchen, then aim",
+      "invalid": "Can't place the cue ball here",
+      "aim": "Drag on the table to aim"
+    },
+    "lobby": {
+      "title": "Rules",
+      "values": "Ball values",
+      "rule1": "Take turns: each shot is one try to pot balls.",
+      "rule2": "A potted ball scores its value; the bigger and heavier it is, the harder it is to pot.",
+      "rule3": "Fouls: cue ball potted, missing everything or running out of time cost points.",
+      "rule4": "The rack lasts while balls remain; the highest score wins."
+    },
+    "kind": {
+      "small": "Small",
+      "std": "Standard",
+      "big": "Big",
+      "giant": "Giant",
+      "gold": "Gold"
+    }
+  }
+}
