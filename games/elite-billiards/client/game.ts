@@ -262,7 +262,9 @@ export function mountGame(
   return {
     update(s) {
       last = s;
-      meta = new Map(s.balls.map((b) => [b.id, { id: b.id, kind: b.kind, value: b.value, r: b.r }]));
+      meta = new Map(
+        s.balls.map((b) => [b.id, { id: b.id, kind: b.kind, value: b.value, r: b.r }]),
+      );
       if (replay.active) {
         if (s.stage === 'rolling') replay.sawRolling = true;
         const resolved =

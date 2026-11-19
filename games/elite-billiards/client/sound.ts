@@ -53,7 +53,14 @@ export class Sound {
     return c;
   }
 
-  private tone(c: AudioContext, f0: number, f1: number, dur: number, vol: number, type: OscillatorType): void {
+  private tone(
+    c: AudioContext,
+    f0: number,
+    f1: number,
+    dur: number,
+    vol: number,
+    type: OscillatorType,
+  ): void {
     const o = c.createOscillator();
     const g = c.createGain();
     o.type = type;

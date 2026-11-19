@@ -226,6 +226,10 @@
   gap: 4px;
   font-size: 14px;
 }
+.eb-lobby__hint {
+  font-size: 13px;
+  opacity: 0.8;
+}
 .eb-lobby__values {
   display: flex;
   flex-wrap: wrap;
@@ -246,5 +250,7 @@
   color: #111;
   font-weight: 800;
   font-size: 13px;
-  box-shadow: inset -3px -4px 6px rgba(0, 0, 0, 0.4), inset 2px 2px 4px rgba(255, 255, 255, 0.4);
+  box-shadow:
+    inset -3px -4px 6px rgba(0, 0, 0, 0.4),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.4);
 }

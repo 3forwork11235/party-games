@@ -3,7 +3,6 @@ import { KITCHEN_X, W } from '../../shared/table.js';
 import type { AimState, DrawBall } from '../types.js';
 import type { View } from '../view.js';
 
-
 /** Линия прицела до шара-призрака, направление прицельного шара и касательная битка. */
 export function drawAimLine(
   ctx: CanvasRenderingContext2D,
@@ -15,7 +14,10 @@ export function drawAimLine(
 ): void {
   const pr = predictFirstHit(balls, { x: cue.x, y: cue.y, r: cue.r }, aim.dx, aim.dy);
   const a = view.toScreen(cue.x, cue.y);
-  const end = pr.kind === 'none' ? { x: cue.x + aim.dx * 3, y: cue.y + aim.dy * 3 } : { x: pr.ghostX, y: pr.ghostY };
+  const end =
+    pr.kind === 'none'
+      ? { x: cue.x + aim.dx * 3, y: cue.y + aim.dy * 3 }
+      : { x: pr.ghostX, y: pr.ghostY };
   const b = view.toScreen(end.x, end.y);
   ctx.save();
   ctx.globalAlpha = alpha;
@@ -107,7 +109,12 @@ export function drawCue(
 }
 
 /** Подсветка дома при «биток с руки». */
-export function drawKitchen(ctx: CanvasRenderingContext2D, view: View, now: number, valid: boolean): void {
+export function drawKitchen(
+  ctx: CanvasRenderingContext2D,
+  view: View,
+  now: number,
+  valid: boolean,
+): void {
   const a = view.toScreen(0, 0);
   const b = view.toScreen(KITCHEN_X, W);
   const pulse = 0.12 + 0.06 * Math.sin(now / 280);

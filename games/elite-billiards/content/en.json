@@ -30,7 +30,8 @@
       "rule1": "Take turns: each shot is one try to pot balls.",
       "rule2": "A potted ball scores its value; the bigger and heavier it is, the harder it is to pot.",
       "rule3": "Fouls: cue ball potted, missing everything or running out of time cost points.",
-      "rule4": "The rack lasts while balls remain; the highest score wins."
+      "rule4": "The rack lasts while balls remain; the highest score wins.",
+      "botsHint": "Playing solo? Add a bot with the “🤖 Add bot” button above"
     },
     "kind": {
       "small": "Small",

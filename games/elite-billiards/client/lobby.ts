@@ -18,7 +18,7 @@ export function mountLobby(
   container: HTMLElement,
   ctx: BilliardsCtx,
 ): GameView<EliteBilliardsPublicState> {
-  const { t } = ctx;
+  const { t, me } = ctx;
   const rules = h(
     'ul',
     { class: 'eb-lobby__rules' },
@@ -32,7 +32,10 @@ export function mountLobby(
       const px = Math.round(spec.r * 1500);
       const ball = h(
         'span',
-        { class: 'eb-ball-icon', style: `width:${px}px;height:${px}px;background:${ballColor(id, kind)}` },
+        {
+          class: 'eb-ball-icon',
+          style: `width:${px}px;height:${px}px;background:${ballColor(id, kind)}`,
+        },
         String(spec.value),
       );
       return h('div', { class: 'eb-lobby__value' }, [
@@ -41,15 +44,20 @@ export function mountLobby(
       ]);
     }),
   );
+  const botsHint = h('div', { class: 'eb-lobby__hint' }, t('billiards.lobby.botsHint'));
+  botsHint.hidden = true;
   const el = h('div', { class: 'eb-lobby' }, [
     h('div', { class: 'eb-lobby__title' }, t('billiards.lobby.title')),
     rules,
     h('div', { class: 'eb-lobby__title' }, t('billiards.lobby.values')),
     values,
+    botsHint,
   ]);
   container.append(el);
   return {
-    update() {},
+    update(state) {
+      botsHint.hidden = state.hostId !== me;
+    },
     destroy() {
       el.remove();
     },

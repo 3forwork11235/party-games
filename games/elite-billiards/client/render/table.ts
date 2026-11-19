@@ -1,4 +1,14 @@
-import { CM, CUSHIONS, KITCHEN_X, FOOT_SPOT, HEAD_SPOT, L, POCKETS, SM, W } from '../../shared/table.js';
+import {
+  CM,
+  CUSHIONS,
+  KITCHEN_X,
+  FOOT_SPOT,
+  HEAD_SPOT,
+  L,
+  POCKETS,
+  SM,
+  W,
+} from '../../shared/table.js';
 import { RAIL, type View } from '../view.js';
 
 const CUSHION_W = 0.05;
@@ -34,7 +44,12 @@ function drawWood(ctx: CanvasRenderingContext2D): void {
     ctx.lineWidth = 0.0015 + rnd() * 0.003;
     ctx.beginPath();
     ctx.moveTo(xa, y);
-    ctx.quadraticCurveTo(xa + len / 2, y + (rnd() - 0.5) * 0.02, xa + len, y + (rnd() - 0.5) * 0.01);
+    ctx.quadraticCurveTo(
+      xa + len / 2,
+      y + (rnd() - 0.5) * 0.02,
+      xa + len,
+      y + (rnd() - 0.5) * 0.01,
+    );
     ctx.stroke();
   }
   // Фаска и блики по краю.
@@ -45,7 +60,12 @@ function drawWood(ctx: CanvasRenderingContext2D): void {
   ctx.stroke();
   ctx.strokeStyle = 'rgba(0,0,0,0.5)';
   ctx.lineWidth = 0.006;
-  ctx.strokeRect(-CUSHION_W - 0.004, -CUSHION_W - 0.004, L + 2 * CUSHION_W + 0.008, W + 2 * CUSHION_W + 0.008);
+  ctx.strokeRect(
+    -CUSHION_W - 0.004,
+    -CUSHION_W - 0.004,
+    L + 2 * CUSHION_W + 0.008,
+    W + 2 * CUSHION_W + 0.008,
+  );
 }
 
 function drawCloth(ctx: CanvasRenderingContext2D): void {

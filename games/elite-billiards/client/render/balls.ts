@@ -79,7 +79,12 @@ export interface BallFx {
   dark?: number;
 }
 
-export function drawBallShadow(ctx: CanvasRenderingContext2D, view: View, b: DrawBall, fx?: BallFx): void {
+export function drawBallShadow(
+  ctx: CanvasRenderingContext2D,
+  view: View,
+  b: DrawBall,
+  fx?: BallFx,
+): void {
   const p = view.toScreen(b.x, b.y);
   const R = b.r * view.scale * (fx?.scale ?? 1);
   const cx = p.x + R * 0.16;
@@ -173,7 +178,14 @@ export function drawBall(
     ctx.fillRect(p.x - R, p.y - R, 2 * R, 2 * R);
   }
   ctx.restore();
-  const spec = ctx.createRadialGradient(p.x - R * 0.38, p.y - R * 0.42, 0, p.x - R * 0.38, p.y - R * 0.42, R * 0.28);
+  const spec = ctx.createRadialGradient(
+    p.x - R * 0.38,
+    p.y - R * 0.42,
+    0,
+    p.x - R * 0.38,
+    p.y - R * 0.42,
+    R * 0.28,
+  );
   spec.addColorStop(0, 'rgba(255,255,255,0.85)');
   spec.addColorStop(1, 'rgba(255,255,255,0)');
   ctx.fillStyle = spec;

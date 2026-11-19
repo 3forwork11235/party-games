@@ -50,7 +50,11 @@ export function parseAim(raw: unknown): AimMessage | null {
   const m = raw as Partial<AimMessage>;
   const d = unit(m.dx, m.dy);
   if (!d || !fin(m.power)) return null;
-  const out: AimMessage = { dx: d.dx, dy: d.dy, power: m.power < 0 ? 0 : m.power > 1 ? 1 : m.power };
+  const out: AimMessage = {
+    dx: d.dx,
+    dy: d.dy,
+    power: m.power < 0 ? 0 : m.power > 1 ? 1 : m.power,
+  };
   if (fin(m.cueX) && fin(m.cueY)) {
     out.cueX = m.cueX;
     out.cueY = m.cueY;

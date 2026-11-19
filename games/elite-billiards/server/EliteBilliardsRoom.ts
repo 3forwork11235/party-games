@@ -1,6 +1,8 @@
 import { PartyRoom } from '@party/core/server';
 import {
   AIM_MAX_PER_SEC,
+  BOT_AIM_LEAD_MS,
+  BOT_THINK_MS,
   RACK_MAX_MS,
   ROLL_GRACE_MS,
   gameConfig,
@@ -25,6 +27,7 @@ import {
 } from '../shared/rules.js';
 import { BallState, EliteBilliardsState } from '../shared/state.js';
 import { HEAD_SPOT } from '../shared/table.js';
+import { scheduleBotTurn, type BotTimer } from './botTurn.js';
 import { findFreeCueSpot, parseAim, parseShot } from './shotInput.js';
 
 interface PendingShot {
@@ -41,6 +44,9 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
 
   private pending: PendingShot | null = null;
   private aimTimes: number[] = [];
+  private botTimer: BotTimer | null = null;
+  protected botThinkMs: readonly [number, number] = BOT_THINK_MS;
+  protected botAimLeadMs = BOT_AIM_LEAD_MS;
 
   protected createState(): EliteBilliardsState {
     return new EliteBilliardsState();
@@ -100,6 +106,7 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
     s.lastFoul = '';
     s.rackEndsAt = this.now() + RACK_MAX_MS;
     s.stage = 'aim';
+    this.scheduleBot();
   }
 
   onRoundTimeout(): boolean {
@@ -116,16 +123,15 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
   }
 
   onRoundEnd(): Record<string, number> {
-    this.state.stage = '';
-    this.pending = null;
+    this.stopTurns();
     const out: Record<string, number> = {};
-    for (const p of this.getPlayers()) out[p.id] = clampRackScore(this.state.rackScore.get(p.id) ?? 0);
+    for (const p of this.getPlayers())
+      out[p.id] = clampRackScore(this.state.rackScore.get(p.id) ?? 0);
     return out;
   }
 
   onGameEnd(): void {
-    this.state.stage = '';
-    this.pending = null;
+    this.stopTurns();
   }
 
   onPlayerLeave(playerId: string): void {
@@ -135,12 +141,37 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
     if (next === '' || next === playerId) return;
     s.shooterId = next;
     this.restartRound(this.config.roundMs);
+    this.scheduleBot();
   }
 
   // ---- ход ----
 
   private isConnected(id: string): boolean {
     return this.state.players.get(id)?.connected === true;
+  }
+
+  private stopTurns(): void {
+    this.botTimer?.clear();
+    this.botTimer = null;
+    this.state.stage = '';
+    this.pending = null;
+  }
+
+  /** Стрелок — бот в стадии aim: спланировать и отыграть удар. */
+  private scheduleBot(): void {
+    this.botTimer?.clear();
+    const s = this.state;
+    if (s.phase !== 'round' || s.stage !== 'aim' || !this.isBot(s.shooterId)) return;
+    const id = s.shooterId;
+    this.botTimer = scheduleBotTurn({
+      clock: this.clock,
+      rng: () => this.rng(),
+      state: s,
+      think: this.botThinkMs,
+      lead: this.botAimLeadMs,
+      onAim: (m) => this.broadcast(MSG_AIM_OF, { ...m, shooterId: id }),
+      onShot: (m) => this.handleShot(id, m),
+    });
   }
 
   private handleShot(playerId: string, raw: unknown): void {
@@ -174,6 +205,7 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
       spinY: shot.spinY,
     });
     s.shotNo += 1;
+    this.botTimer?.clear();
     this.pending = { shooterId: playerId, result };
     s.stage = 'rolling';
     const msg: ShotPlayedMessage = {
@@ -262,5 +294,6 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
         : nextShooter(s.order.toArray(), prev, (id) => this.isConnected(id));
     s.stage = 'aim';
     this.restartRound(this.config.roundMs);
+    this.scheduleBot();
   }
 }

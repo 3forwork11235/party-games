@@ -83,7 +83,11 @@ export function createPanel(ctx: BilliardsCtx, aim: AimState, on: PanelHandlers)
   });
 
   const nudgeBtn = (label: string, sign: number, aria: string): HTMLButtonElement => {
-    const b = h('button', { type: 'button', class: 'eb-btn eb-btn--nudge', 'aria-label': aria }, label);
+    const b = h(
+      'button',
+      { type: 'button', class: 'eb-btn eb-btn--nudge', 'aria-label': aria },
+      label,
+    );
     let delay = 0;
     let rep = 0;
     const stop = (): void => {
@@ -98,13 +102,16 @@ export function createPanel(ctx: BilliardsCtx, aim: AimState, on: PanelHandlers)
         rep = window.setInterval(() => on.onNudge(sign), 45);
       }, 350);
     });
-    for (const ev of ['pointerup', 'pointerleave', 'pointercancel'])
-      b.addEventListener(ev, stop);
+    for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) b.addEventListener(ev, stop);
     cleanups.push(stop);
     return b;
   };
 
-  const shoot = h('button', { type: 'button', class: 'eb-btn eb-btn--shoot' }, t('billiards.shoot'));
+  const shoot = h(
+    'button',
+    { type: 'button', class: 'eb-btn eb-btn--shoot' },
+    t('billiards.shoot'),
+  );
   shoot.addEventListener('click', () => on.onShoot());
 
   const el = h('div', { class: 'eb-panel', hidden: true }, [

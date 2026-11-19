@@ -90,7 +90,8 @@ export function createHud(ctx: BilliardsCtx): Hud {
       this.tick();
     },
     tick() {
-      const sec = timerEnd > 0 ? Math.max(0, Math.ceil((timerEnd - ctx.client.serverNow()) / 1000)) : -1;
+      const sec =
+        timerEnd > 0 ? Math.max(0, Math.ceil((timerEnd - ctx.client.serverNow()) / 1000)) : -1;
       if (sec === timerShown) return;
       timerShown = sec;
       timer.textContent = sec >= 0 ? String(sec) : '';

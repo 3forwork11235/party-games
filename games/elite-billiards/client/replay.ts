@@ -30,7 +30,12 @@ export class Replay {
     return this.sim?.balls ?? [];
   }
 
-  start(msg: ShotPlayedMessage, meta: ReadonlyMap<number, BallMeta>, nowMs: number, shotNo: number): void {
+  start(
+    msg: ShotPlayedMessage,
+    meta: ReadonlyMap<number, BallMeta>,
+    nowMs: number,
+    shotNo: number,
+  ): void {
     this.sim = createSimulation({
       balls: msg.balls.map((b) => {
         const m = meta.get(b.id);
