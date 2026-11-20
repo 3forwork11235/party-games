@@ -25,22 +25,17 @@ export interface View {
   vec(dx: number, dy: number): Pt;
 }
 
-/**
- * top/bottom — высота HUD и панели поверх холста: стол вписывается между ними, если это не
- * уменьшает его больше чем на четверть (иначе — на весь холст, под полупрозрачными панелями).
- */
+/** top/bottom — высота HUD и панели управления поверх холста: стол всегда вписывается между ними. */
 export function createView(w: number, h: number, top = 0, bottom = 0): View {
   const rotated = h > w;
   const tw = L + 2 * RAIL;
   const th = W + 2 * RAIL;
   const sw = rotated ? th : tw;
   const sh = rotated ? tw : th;
-  const full = Math.max(1, Math.min(w / sw, h / sh));
-  const inner = Math.max(1, Math.min(w / sw, (h - top - bottom) / sh));
-  const fit = inner >= full * 0.75;
-  const scale = fit ? inner : full;
+  const free = Math.max(1, h - top - bottom);
+  const scale = Math.max(1, Math.min(w / sw, free / sh));
   const ox = (w - sw * scale) / 2;
-  const oy = fit ? top + (h - top - bottom - sh * scale) / 2 : (h - sh * scale) / 2;
+  const oy = top + (free - sh * scale) / 2;
   const s = scale;
   const matrix: View['matrix'] = rotated
     ? [0, s, s, 0, ox + s * RAIL, oy + s * RAIL]

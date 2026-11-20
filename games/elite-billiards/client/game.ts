@@ -121,7 +121,8 @@ export function mountGame(
     const hh = Math.max(1, stage.clientHeight);
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(hh * dpr);
-    panelH = panel.el.offsetHeight || panelH; // скрытая панель (чужой ход) — прошлая высота
+    // Скрытая панель (чужой ход) — прошлая высота или оценка, чтобы стол не прыгал.
+    panelH = panel.el.offsetHeight || panelH || (hh < 520 && w > hh ? 60 : 108);
     view = createView(w, hh, hud.el.offsetHeight, panelH);
     cache = renderTableCache(view, dpr);
   };
