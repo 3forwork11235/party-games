@@ -48,6 +48,28 @@
       "nick": "Player name",
       "add": "Add player",
       "mine": "On this device"
+    },
+    "menu": {
+      "title": "Menu",
+      "resume": "Resume",
+      "settings": "Settings",
+      "rules": "Rules",
+      "back": "Back",
+      "exit": "Leave game",
+      "exitConfirm": "Really leave? The match will go on without you",
+      "exitYes": "Yes, leave"
+    },
+    "settings": {
+      "sound": "Sound",
+      "volume": "Volume",
+      "aimHint": "Aim guide",
+      "hint": {
+        "full": "Full",
+        "line": "Line only",
+        "off": "Off"
+      },
+      "vibration": "Vibration",
+      "handoff": "\"Pass the device\" banner"
     }
   }
 }

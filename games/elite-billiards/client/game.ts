@@ -9,8 +9,10 @@ import {
   type ShotPlayedMessage,
 } from '../shared/messages.js';
 import { isValidCuePlacement } from '../shared/rack.js';
-import { BALL_SPECS, HEAD_SPOT } from '../shared/table.js';
+import { HEAD_SPOT } from '../shared/table.js';
 import type { EliteBilliardsPublicState } from '../shared/types.js';
+import { createPrefs } from './prefs.js';
+import { displayBalls } from './display.js';
 import { createHud } from './hud.js';
 import { createHandoff } from './handoff.js';
 import { createInput } from './input.js';
@@ -25,7 +27,6 @@ import { Sound } from './sound.js';
 import type { AimState, BallMeta, BilliardsCtx, DrawBall } from './types.js';
 import { createView, type View } from './view.js';
 const AIM_SEND_MS = 125;
-const CUE_META: BallMeta = { id: 0, kind: 'cue', value: 0, r: BALL_SPECS.cue.r };
 export function mountGame(
   container: HTMLElement,
   ctx: BilliardsCtx,
@@ -58,6 +59,8 @@ export function mountGame(
   const replay = new Replay();
   const orient = new Orientation();
   const sound = new Sound();
+  const prefs = createPrefs(ctx, sound);
+  const { settings, menu } = prefs;
   const g = canvas.getContext('2d');
   const handoff = createHandoff();
   const mine = (): boolean =>
@@ -66,12 +69,13 @@ export function mountGame(
     last.stage === 'aim' &&
     isLocalPlayer(last, me, last.shooterId) &&
     !replay.active &&
-    !shotSent;
+    !shotSent &&
+    !menu.isOpen();
   const inHand = (): boolean => !!last?.cueInHand;
   const valid = (): boolean =>
     !inHand() || (!!last && isValidCuePlacement(aim.cueX, aim.cueY, last.balls));
 
-  const hud = createHud(ctx);
+  const hud = createHud(ctx, menu.button);
   const panel = createPanel(ctx, aim, {
     onChange: () => undefined,
     onNudge(sign) {
@@ -129,6 +133,7 @@ export function mountGame(
     replay.start(msg, meta, performance.now(), last?.shotNo ?? 0);
     other = null;
     sound.strike(msg.power);
+    if (last && isLocalPlayer(last, me, msg.shooterId)) prefs.buzz(15);
   });
   const offAim = ctx.client.onGame<AimOfMessage>(MSG_AIM_OF, (msg) => {
     if (msg.shooterId !== me && last?.guests.get(msg.shooterId) !== me) other = msg;
@@ -145,7 +150,9 @@ export function mountGame(
     resetAim(s, aim, swap);
     if (swap) {
       const p = s.players.get(s.shooterId);
-      handoff.show(t('billiards.hotseat.pass', { nick: `${p?.avatar ?? ''} ${p?.nick ?? ''}` }));
+      if (settings.get().handoff) {
+        handoff.show(t('billiards.hotseat.pass', { nick: `${p?.avatar ?? ''} ${p?.nick ?? ''}` }));
+      }
       panel.sync();
     }
   };
@@ -164,27 +171,17 @@ export function mountGame(
     return { x: HEAD_SPOT.x, y: HEAD_SPOT.y };
   };
 
-  const display = (): DrawBall[] => {
-    const out: DrawBall[] = [];
-    const src: ReadonlyArray<{ id: number; x: number; y: number }> = replay.active
-      ? replay.balls.filter((b) => !b.potted)
-      : (last?.balls ?? []).filter((b) => !b.potted);
-    for (const b of src) {
-      const m = meta.get(b.id) ?? (b.id === 0 ? CUE_META : undefined);
-      if (m) out.push({ id: b.id, kind: m.kind, value: m.value, r: m.r, x: b.x, y: b.y });
-    }
-    if (!replay.active && last?.cueInHand && last.phase === 'round') {
-      const p = handPos();
-      const cue: DrawBall = { id: 0, kind: 'cue', value: 0, r: CUE_META.r, x: p.x, y: p.y };
-      const i = out.findIndex((b) => b.id === 0);
-      if (i >= 0) out[i] = cue;
-      else out.push(cue);
-    }
-    return out;
-  };
+  const display = (): DrawBall[] => displayBalls(last, replay, meta, handPos());
 
   const runReplay = (now: number): void =>
-    applyTick(replay, replay.tick(now), { now, meta, pots, orient, sound });
+    applyTick(replay, replay.tick(now), {
+      now,
+      meta,
+      pots,
+      orient,
+      sound,
+      onPot: () => prefs.buzz(30),
+    });
 
   const sendAim = (now: number): void => {
     if (!mine() || now - sentAt < AIM_SEND_MS) return;
@@ -246,6 +243,7 @@ export function mountGame(
         pots,
         aim: shown,
         aimAlpha: m ? 1 : 0.45,
+        aimHint: settings.get().aimHint,
         kitchen: m && inHand() ? { valid: ok } : null,
         invalidCue: m && inHand() && !ok,
       });
@@ -287,6 +285,7 @@ export function mountGame(
       stopInput();
       offPlayed();
       offAim();
+      prefs.destroy();
       sound.destroy();
       panel.destroy();
       hud.destroy();

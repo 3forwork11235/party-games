@@ -1,5 +1,6 @@
 import { drawAimLine, drawCue, drawInvalidCue, drawKitchen } from './render/aim.js';
 import { drawBall, drawBallShadow, type Orientation } from './render/balls.js';
+import type { AimHint } from './settings.js';
 import type { AimState, DrawBall } from './types.js';
 import type { View } from './view.js';
 
@@ -24,6 +25,7 @@ export interface SceneInput {
   /** Прицел для показа (свой или чужой), null — не рисовать. */
   aim: AimState | null;
   aimAlpha: number;
+  aimHint: AimHint;
   kitchen: { valid: boolean } | null;
   invalidCue: boolean;
 }
@@ -37,7 +39,7 @@ export function drawScene(i: SceneInput): void {
   if (i.kitchen) drawKitchen(g, view, now, i.kitchen.valid);
 
   const cue = i.balls.find((b) => b.id === 0);
-  if (i.aim && cue) drawAimLine(g, view, i.balls, cue, i.aim, i.aimAlpha);
+  if (i.aim && cue) drawAimLine(g, view, i.balls, cue, i.aim, i.aimAlpha, i.aimHint);
 
   const falling = i.pots.map((p) => {
     const e = Math.min(1, (now - p.t0) / POT_MS);

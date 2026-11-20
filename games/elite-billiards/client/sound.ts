@@ -4,6 +4,8 @@ const MAX_PER_FRAME = 5;
 export class Sound {
   private ctx: AudioContext | null = null;
   private noise: AudioBuffer | null = null;
+  private master: GainNode | null = null;
+  private volume = 0.7;
   private frameCount = 0;
   private offGesture: (() => void) | null = null;
 
@@ -28,6 +30,9 @@ export class Sound {
     if (!Ctor) return null;
     try {
       this.ctx = new Ctor();
+      this.master = this.ctx.createGain();
+      this.master.gain.value = this.volume;
+      this.master.connect(this.ctx.destination);
       const len = Math.floor(this.ctx.sampleRate * 0.05);
       this.noise = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
       const d = this.noise.getChannelData(0);
@@ -36,6 +41,12 @@ export class Sound {
       this.ctx = null;
     }
     return this.ctx;
+  }
+
+  /** Громкость 0..1 (0 — выключено). */
+  setVolume(v: number): void {
+    this.volume = v;
+    if (this.master) this.master.gain.value = v;
   }
 
   newFrame(): void {
@@ -48,7 +59,7 @@ export class Sound {
       void c?.resume();
       return null;
     }
-    if (this.frameCount >= MAX_PER_FRAME) return null;
+    if (this.volume <= 0 || this.frameCount >= MAX_PER_FRAME) return null;
     this.frameCount++;
     return c;
   }
@@ -68,7 +79,7 @@ export class Sound {
     o.frequency.exponentialRampToValueAtTime(f1, c.currentTime + dur);
     g.gain.setValueAtTime(vol, c.currentTime);
     g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + dur);
-    o.connect(g).connect(c.destination);
+    o.connect(g).connect(this.master ?? c.destination);
     o.start();
     o.stop(c.currentTime + dur + 0.02);
   }
@@ -85,7 +96,7 @@ export class Sound {
       const g = c.createGain();
       s.buffer = this.noise;
       g.gain.value = 0.1 + v * 0.25;
-      s.connect(g).connect(c.destination);
+      s.connect(g).connect(this.master ?? c.destination);
       s.start();
     }
   }
@@ -117,5 +128,6 @@ export class Sound {
     this.offGesture?.();
     void this.ctx?.close();
     this.ctx = null;
+    this.master = null;
   }
 }

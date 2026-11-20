@@ -1,5 +1,6 @@
 import { predictFirstHit } from '../../shared/physics/index.js';
 import { KITCHEN_X, W } from '../../shared/table.js';
+import type { AimHint } from '../settings.js';
 import type { AimState, DrawBall } from '../types.js';
 import type { View } from '../view.js';
 
@@ -11,7 +12,9 @@ export function drawAimLine(
   cue: DrawBall,
   aim: AimState,
   alpha: number,
+  mode: AimHint = 'full',
 ): void {
+  if (mode === 'off') return;
   const pr = predictFirstHit(balls, { x: cue.x, y: cue.y, r: cue.r }, aim.dx, aim.dy);
   const a = view.toScreen(cue.x, cue.y);
   const end =
@@ -38,7 +41,7 @@ export function drawAimLine(
     ctx.arc(b.x, b.y, R, 0, Math.PI * 2);
     ctx.stroke();
   }
-  if (pr.kind === 'ball' && pr.targetId !== undefined) {
+  if (mode === 'full' && pr.kind === 'ball' && pr.targetId !== undefined) {
     const len = 0.28 * view.scale;
     const hit = balls.find((q) => q.id === pr.targetId);
     if (hit && pr.targetDirX !== undefined && pr.targetDirY !== undefined) {

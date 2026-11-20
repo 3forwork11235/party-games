@@ -12,6 +12,8 @@ export interface TickDeps {
   pots: PotAnim[];
   orient: Orientation;
   sound: Sound;
+  /** Забитый шар (вибрация). */
+  onPot?: () => void;
 }
 
 /** События шага проигрывания → звук, анимация падения в лузу, вращение шаров. */
@@ -36,6 +38,7 @@ export function applyTick(replay: Replay, r: TickResult, d: TickDeps): void {
         });
       }
       d.sound.pot();
+      d.onPot?.();
     } else if (e.type === 'ball') d.sound.click(e.impulse);
     else d.sound.thump(e.impulse);
   }

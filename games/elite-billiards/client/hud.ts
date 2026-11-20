@@ -19,7 +19,7 @@ export interface Hud {
 }
 
 /** Верхняя панель: чей ход, очки раскладки, итог прошлого удара, осталось шаров, таймер. */
-export function createHud(ctx: BilliardsCtx): Hud {
+export function createHud(ctx: BilliardsCtx, menuButton?: HTMLElement): Hud {
   const { t, me } = ctx;
   const turn = h('div', { class: 'eb-hud__turn' });
   const timer = h('div', { class: 'eb-hud__timer' });
@@ -28,7 +28,10 @@ export function createHud(ctx: BilliardsCtx): Hud {
   const left = h('div', { class: 'eb-hud__left' });
   const hintEl = h('div', { class: 'eb-hud__hint' });
   const banner = h('div', { class: 'eb-banner', hidden: true });
-  const top = h('div', { class: 'eb-hud__row' }, [turn, timer]);
+  const top = h('div', { class: 'eb-hud__row' }, [
+    turn,
+    h('div', { class: 'eb-hud__right' }, [timer, menuButton]),
+  ]);
   const mid = h('div', { class: 'eb-hud__row eb-hud__row--sub' }, [last, left]);
   const el = h('div', { class: 'eb-hud' }, [top, scores, mid, hintEl, banner]);
   let timerEnd = 0;
