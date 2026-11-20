@@ -7,6 +7,7 @@ import type { EliteBilliardsPublicState } from '../shared/types.js';
 import { mountGame } from './game.js';
 import { mountLobby } from './lobby.js';
 import './style.css';
+import './style-hotseat.css';
 
 void startPartyApp<EliteBilliardsPublicState>({
   slug: SLUG,

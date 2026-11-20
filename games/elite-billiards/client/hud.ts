@@ -1,5 +1,6 @@
 import { h } from '@party/ui';
 import { PENALTY_NO_HIT, PENALTY_SCRATCH, PENALTY_TIMEOUT } from '../shared/config.js';
+import { isLocalPlayer } from './local.js';
 import type { EliteBilliardsPublicState } from '../shared/types.js';
 import type { BilliardsCtx } from './types.js';
 
@@ -57,11 +58,14 @@ export function createHud(ctx: BilliardsCtx): Hud {
       const inRound = s.phase === 'round';
       const shooter = s.players.get(s.shooterId);
       if (inRound && shooter) {
+        const who = `${shooter.avatar} ${shooter.nick}`;
         turn.textContent =
           s.shooterId === me
             ? t('billiards.yourShot')
-            : t('billiards.turnOf', { nick: `${shooter.avatar} ${shooter.nick}` });
-        turn.classList.toggle('eb-hud__turn--me', s.shooterId === me);
+            : isLocalPlayer(s, me, s.shooterId)
+              ? t('billiards.hotseat.shooting', { nick: who })
+              : t('billiards.turnOf', { nick: who });
+        turn.classList.toggle('eb-hud__turn--me', isLocalPlayer(s, me, s.shooterId));
       } else {
         turn.textContent = '';
       }

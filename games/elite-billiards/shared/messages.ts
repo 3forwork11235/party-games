@@ -7,6 +7,14 @@ export const MSG_SHOT_PLAYED = 'elite-billiards:shotPlayed';
 /** Сервер → клиенты (кроме стрелка): прицел стрелка. */
 export const MSG_AIM_OF = 'elite-billiards:aimOf';
 
+/** Клиент → сервер (lobby): добавить игрока на этом устройстве (hot-seat). */
+export const MSG_ADD_GUEST = 'elite-billiards:addGuest';
+
+export interface AddGuestMessage {
+  nick: string;
+  avatar: string;
+}
+
 export interface ShotMessage {
   /** Направление удара (будет нормировано сервером). */
   dx: number;
@@ -58,4 +66,5 @@ export interface ShotPlayedMessage {
 export interface GameClientMessages {
   [MSG_SHOT]: ShotMessage;
   [MSG_AIM]: AimMessage;
+  [MSG_ADD_GUEST]: AddGuestMessage;
 }

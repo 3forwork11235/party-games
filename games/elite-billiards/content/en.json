@@ -39,6 +39,15 @@
       "big": "Big",
       "giant": "Giant",
       "gold": "Gold"
+    },
+    "hotseat": {
+      "pass": "Turn: {nick}. Pass the device",
+      "shooting": "{nick} to shoot",
+      "title": "Two players on this device",
+      "hint": "Pass the phone back and forth: add a player on this device.",
+      "nick": "Player name",
+      "add": "Add player",
+      "mine": "On this device"
     }
   }
 }

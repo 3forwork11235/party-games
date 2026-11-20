@@ -12,7 +12,9 @@ import { isValidCuePlacement } from '../shared/rack.js';
 import { BALL_SPECS, HEAD_SPOT } from '../shared/table.js';
 import type { EliteBilliardsPublicState } from '../shared/types.js';
 import { createHud } from './hud.js';
+import { createHandoff } from './handoff.js';
 import { createInput } from './input.js';
+import { isLocalPlayer, resetAim } from './local.js';
 import { createPanel, NUDGE_RAD } from './panel.js';
 import { applyTick } from './tick.js';
 import { Orientation } from './render/balls.js';
@@ -57,11 +59,12 @@ export function mountGame(
   const orient = new Orientation();
   const sound = new Sound();
   const g = canvas.getContext('2d');
+  const handoff = createHandoff();
   const mine = (): boolean =>
     !!last &&
     last.phase === 'round' &&
     last.stage === 'aim' &&
-    last.shooterId === me &&
+    isLocalPlayer(last, me, last.shooterId) &&
     !replay.active &&
     !shotSent;
   const inHand = (): boolean => !!last?.cueInHand;
@@ -105,7 +108,7 @@ export function mountGame(
     cueInHand: inHand,
     onChange: () => undefined,
   });
-  container.append(h('div', { class: 'eb-root' }, [stage, hud.el, panel.el]));
+  container.append(h('div', { class: 'eb-root' }, [stage, hud.el, panel.el, handoff.el]));
 
   let panelH = 0;
   const resize = (): void => {
@@ -128,30 +131,22 @@ export function mountGame(
     sound.strike(msg.power);
   });
   const offAim = ctx.client.onGame<AimOfMessage>(MSG_AIM_OF, (msg) => {
-    if (msg.shooterId !== me) other = msg;
+    if (msg.shooterId !== me && last?.guests.get(msg.shooterId) !== me) other = msg;
   });
 
+  let prevShooter = '';
   const newTurn = (s: EliteBilliardsPublicState): void => {
     shotSent = false;
     sentSig = '';
-    if (s.shooterId !== me || s.stage !== 'aim') return;
-    const cue = s.balls.find((b) => b.id === 0);
-    if (s.cueInHand || !cue) {
-      aim.cueX = HEAD_SPOT.x;
-      aim.cueY = HEAD_SPOT.y;
-    } else {
-      aim.cueX = cue.x;
-      aim.cueY = cue.y;
-    }
-    let best = Infinity;
-    for (const b of s.balls) {
-      if (b.id === 0 || b.potted) continue;
-      const d = Math.hypot(b.x - aim.cueX, b.y - aim.cueY);
-      if (d < best && d > 0.01) {
-        best = d;
-        aim.dx = (b.x - aim.cueX) / d;
-        aim.dy = (b.y - aim.cueY) / d;
-      }
+    const local = s.stage === 'aim' && isLocalPlayer(s, me, s.shooterId);
+    const swap = local && prevShooter !== '' && prevShooter !== s.shooterId;
+    if (!local) return;
+    prevShooter = s.shooterId;
+    resetAim(s, aim, swap);
+    if (swap) {
+      const p = s.players.get(s.shooterId);
+      handoff.show(t('billiards.hotseat.pass', { nick: `${p?.avatar ?? ''} ${p?.nick ?? ''}` }));
+      panel.sync();
     }
   };
 
@@ -218,7 +213,7 @@ export function mountGame(
       last.phase === 'round' &&
       last.stage === 'aim' &&
       !replay.active &&
-      last.shooterId !== me;
+      !isLocalPlayer(last, me, last.shooterId);
     if (m && !inHand()) {
       const cue = last?.balls.find((b) => b.id === 0);
       if (cue) {
@@ -295,6 +290,7 @@ export function mountGame(
       sound.destroy();
       panel.destroy();
       hud.destroy();
+      handoff.destroy();
       container.replaceChildren();
     },
   };

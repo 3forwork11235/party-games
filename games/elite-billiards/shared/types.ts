@@ -27,5 +27,6 @@ export interface EliteBilliardsPublicState extends ICoreState {
   lastShooterId: string;
   lastPoints: number;
   lastFoul: string;
+  guests: Map<string, string>;
   rackEndsAt: number;
 }

@@ -87,13 +87,17 @@ export abstract class PartyRoomCore<S extends CoreState> extends Room<S> {
     return this.bots.has(playerId);
   }
 
-  /** Добавить бота (только lobby, в пределах maxPlayers и config.maxBots). Возвращает id или null. */
-  protected addBot(): string | null {
+  /**
+   * Добавить бота (только lobby, в пределах maxPlayers и config.maxBots). Возвращает id или null.
+   * `setup` — до объявления о входе (например, свой ник и аватар для игрока «на этом устройстве»).
+   */
+  protected addBot(setup?: (bot: Player) => void): string | null {
     const players = this.state.players;
     if (this.state.phase !== 'lobby' || players.size >= this.gameConfig.maxPlayers) return null;
     if (this.bots.size >= (this.gameConfig.maxBots ?? 0)) return null;
     const nicks = new Set(this.getPlayers().map((p) => p.nick));
     const bot = createBotPlayer(++this.botSeq, nicks);
+    setup?.(bot);
     players.set(bot.id, bot);
     this.bots.add(bot.id);
     this.toast('core.toast.player_joined', { name: bot.nick });

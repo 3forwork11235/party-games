@@ -32,6 +32,8 @@ export class EliteBilliardsState extends CoreState {
   @type('number') lastPoints = 0;
   /** '' | 'scratch' | 'noHit' | 'timeout'. */
   @type('string') lastFoul = '';
+  /** Игроки «на этом устройстве» (hot-seat): guestId → playerId владельца устройства. */
+  @type({ map: 'string' }) guests = new MapSchema<string>();
   /** Epoch ms, когда раскладка закончится принудительно. */
   @type('number') rackEndsAt = 0;
 }

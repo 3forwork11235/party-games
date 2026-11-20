@@ -8,6 +8,7 @@ import {
   gameConfig,
 } from '../shared/config.js';
 import {
+  MSG_ADD_GUEST,
   MSG_AIM,
   MSG_AIM_OF,
   MSG_SHOT,
@@ -15,25 +16,20 @@ import {
   type AimOfMessage,
   type ShotPlayedMessage,
 } from '../shared/messages.js';
-import { roundPos, simulateShot, type ShotResult } from '../shared/physics/index.js';
+import { roundPos, simulateShot } from '../shared/physics/index.js';
 import { createRack, isValidCuePlacement, type RackBall } from '../shared/rack.js';
 import {
   clampRackScore,
   firstShooter,
   nextShooter,
-  resolveShot,
   resolveTimeout,
   type Resolution,
 } from '../shared/rules.js';
 import { BallState, EliteBilliardsState } from '../shared/state.js';
-import { HEAD_SPOT } from '../shared/table.js';
 import { scheduleBotTurn, type BotTimer } from './botTurn.js';
-import { findFreeCueSpot, parseAim, parseShot } from './shotInput.js';
-
-interface PendingShot {
-  shooterId: string;
-  result: ShotResult;
-}
+import { addGuest, canControl, isPresent, sweepGuests, type GuestHost } from './guests.js';
+import { parseAim, parseShot } from './shotInput.js';
+import { applyShotToBalls, type PendingShot } from './applyShot.js';
 
 /**
  * Элитный бильярд. Стадии round: aim (SHOT_MS) → rolling (durationMs + ROLL_GRACE_MS) через
@@ -71,10 +67,29 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
     await super.onCreate(options);
     this.onGameMessage<unknown>(MSG_SHOT, ['round'], (id, m) => this.handleShot(id, m));
     this.onGameMessage<unknown>(MSG_AIM, ['round'], (id, m) => this.handleAim(id, m));
+    this.onGameMessage<unknown>(MSG_ADD_GUEST, ['lobby'], (id, m) =>
+      addGuest(this.guestHost(), id, m),
+    );
+  }
+
+  /** Гости (hot-seat) убираются из лобби вместе с владельцем или по кику хоста. */
+  protected onRosterChanged(): void {
+    super.onRosterChanged();
+    sweepGuests(this.guestHost());
+  }
+
+  private guestHost(): GuestHost {
+    return {
+      state: this.state,
+      addBot: (setup) => this.addBot(setup),
+      kick: (id) => this.kickByHost(id),
+      isBot: (id) => this.isBot(id),
+    };
   }
 
   onGameStart(): void {
     const s = this.state;
+    sweepGuests(this.guestHost());
     s.order.clear();
     for (const p of this.getPlayers()) if (p.connected) s.order.push(p.id);
     s.rackScore.clear();
@@ -136,9 +151,11 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
 
   onPlayerLeave(playerId: string): void {
     const s = this.state;
-    if (s.phase !== 'round' || s.stage !== 'aim' || s.shooterId !== playerId) return;
-    const next = nextShooter(s.order.toArray(), playerId, (id) => this.isConnected(id));
-    if (next === '' || next === playerId) return;
+    if (s.phase !== 'round' || s.stage !== 'aim' || !canControl(s.guests, playerId, s.shooterId))
+      return;
+    const from = s.shooterId;
+    const next = nextShooter(s.order.toArray(), from, (id) => this.isConnected(id));
+    if (next === '' || next === from) return;
     s.shooterId = next;
     this.restartRound(this.config.roundMs);
     this.scheduleBot();
@@ -147,7 +164,7 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
   // ---- ход ----
 
   private isConnected(id: string): boolean {
-    return this.state.players.get(id)?.connected === true;
+    return isPresent(this.state, id);
   }
 
   private stopTurns(): void {
@@ -161,7 +178,13 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
   private scheduleBot(): void {
     this.botTimer?.clear();
     const s = this.state;
-    if (s.phase !== 'round' || s.stage !== 'aim' || !this.isBot(s.shooterId)) return;
+    if (
+      s.phase !== 'round' ||
+      s.stage !== 'aim' ||
+      !this.isBot(s.shooterId) ||
+      s.guests.has(s.shooterId)
+    )
+      return;
     const id = s.shooterId;
     this.botTimer = scheduleBotTurn({
       clock: this.clock,
@@ -176,7 +199,8 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
 
   private handleShot(playerId: string, raw: unknown): void {
     const s = this.state;
-    if (s.stage !== 'aim' || s.shooterId !== playerId) return;
+    if (s.stage !== 'aim' || !canControl(s.guests, playerId, s.shooterId)) return;
+    const shooterId = s.shooterId;
     const shot = parseShot(raw);
     if (!shot) return;
     const live = s.balls.filter((b) => !b.potted);
@@ -206,11 +230,11 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
     });
     s.shotNo += 1;
     this.botTimer?.clear();
-    this.pending = { shooterId: playerId, result };
+    this.pending = { shooterId, result };
     s.stage = 'rolling';
     const msg: ShotPlayedMessage = {
       shotNo: s.shotNo,
-      shooterId: playerId,
+      shooterId,
       balls: balls.map((b) => ({ id: b.id, x: b.x, y: b.y })),
       dx: shot.dx,
       dy: shot.dy,
@@ -225,47 +249,21 @@ export class EliteBilliardsRoom extends PartyRoom<EliteBilliardsState> {
 
   private handleAim(playerId: string, raw: unknown): void {
     const s = this.state;
-    if (s.stage !== 'aim' || s.shooterId !== playerId) return;
+    if (s.stage !== 'aim' || !canControl(s.guests, playerId, s.shooterId)) return;
     const aim = parseAim(raw);
     if (!aim) return;
     const t = this.now();
     this.aimTimes = this.aimTimes.filter((x) => t - x < 1000);
     if (this.aimTimes.length >= AIM_MAX_PER_SEC) return;
     this.aimTimes.push(t);
-    const msg: AimOfMessage = { ...aim, shooterId: playerId };
+    const msg: AimOfMessage = { ...aim, shooterId: s.shooterId };
     const client = this.clientOf(playerId);
     this.broadcast(MSG_AIM_OF, msg, client ? { except: client } : undefined);
   }
 
   /** Применить итог удара после rolling. */
   private applyShot(p: PendingShot): void {
-    const s = this.state;
-    const { result } = p;
-    const finals = new Map(result.final.map((f) => [f.id, f]));
-    const values = new Map<number, number>();
-    for (const b of s.balls) if (b.id > 0) values.set(b.id, b.value);
-    const res = resolveShot({ result, values, cueInHand: s.cueInHand });
-    const scratch = res.foul === 'scratch';
-    for (const b of s.balls) {
-      if (b.potted) continue;
-      const f = finals.get(b.id);
-      if (f) {
-        b.x = roundPos(f.x);
-        b.y = roundPos(f.y);
-      } else if (result.potted.includes(b.id) && b.id > 0) {
-        b.potted = true;
-        b.pottedBy = scratch ? '' : p.shooterId;
-      }
-    }
-    if (scratch) {
-      const cue = s.balls.find((b) => b.id === 0);
-      if (cue) {
-        const spot = findFreeCueSpot(s.balls.toArray(), HEAD_SPOT);
-        cue.x = roundPos(spot.x);
-        cue.y = roundPos(spot.y);
-        cue.potted = false;
-      }
-    }
+    const res = applyShotToBalls(this.state, p);
     this.applyResolution(p.shooterId, res);
     this.advance(res.keepTurn, res.cueInHandNext);
   }
